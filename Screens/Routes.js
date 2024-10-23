@@ -75,7 +75,27 @@ export default function Routes() {
         <Appbar.Content title="Routes" titleStyle={{ fontSize: 24 }} />
       </Appbar.Header>
 
+      <Text variant="titleLarge" style={{ marginLeft: 20, marginTop: 20 }}>
+        Overall Statistics
+      </Text>
+
       <View style={styles.container}>
+        <View style={styles.cardFlexBoxRow}>
+          <Card mode="elevated" style={styles.card}>
+            <Card.Content style={styles.cardContent}>
+              <Icon name="map-marker-distance" size={24} color="#000" />
+              <Text variant="titleMedium">{overallDistance} km</Text>
+            </Card.Content>
+          </Card>
+
+          <Card mode="elevated" style={styles.card}>
+            <Card.Content style={styles.cardContent}>
+              <Icon name="clock-outline" size={24} color="#000" />
+              <Text variant="titleMedium">{overallDuration} h</Text>
+            </Card.Content>
+          </Card>
+        </View>
+
         <Text variant="titleLarge" style={{ marginTop: 10, marginBottom: 10 }}>
           Your Routes
         </Text>
