@@ -1,9 +1,18 @@
 import * as Location from "expo-location";
 import { push, ref } from "firebase/database";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Alert, View } from "react-native";
 import MapView, { Marker, Polyline } from "react-native-maps";
-import { Appbar, Button, Card, Text } from "react-native-paper";
+import {
+  Appbar,
+  Button,
+  Card,
+  Modal,
+  PaperProvider,
+  Portal,
+  Text,
+  TextInput,
+} from "react-native-paper";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import { database } from "../firebaseConfig.js";
 import { styles } from "../StyleSheet.js";
@@ -26,6 +35,8 @@ export default function Track() {
   const [pace, setPace] = useState(0);
   const [startTime, setStartTime] = useState();
   const [endTime, setEndTime] = useState();
+  const [name, setName] = useState("");
+  const [visible, setVisible] = React.useState(false);
 
   const startTracking = () => {
     setIsTracking(true);
@@ -36,28 +47,33 @@ export default function Track() {
     setCoordinates([]);
     setStartTime(Date.now());
     setEndTime(0);
+    setName("");
   };
 
   const endTracking = () => {
     setIsTracking(false);
     console.log("Not tracking!");
     setEndTime(Date.now());
-    uploadDataToFirebase();
-    Alert.alert("Route finished!");
+    showDetails();
   };
 
   const uploadDataToFirebase = () => {
-    let pace1 = pace;
+    let newPace = pace;
     if (pace === Infinity || pace === NaN) {
-      pace1 = 0;
+      newPace = 0;
+    }
+
+    let newName = name;
+    if (newName == "") {
+      newName = "Route on " + formatTimestampDay(Date.now());
     }
 
     const obj = {
-      title: "My Route", //TODO: make name settable through textinput
+      title: newName,
       coordinates: coordinates,
       duration: duration,
       distance: distance,
-      pace: pace1,
+      pace: newPace,
       startTime: startTime,
       endTime: endTime,
     };
@@ -161,6 +177,14 @@ export default function Track() {
     return totalDistance; // Total distance in meters
   };
 
+  const showDetails = (key) => {
+    setVisible(true);
+  };
+
+  const hideDetails = () => {
+    setVisible(false);
+  };
+
   return (
     <View style={{ flex: 1 }}>
       <Appbar.Header elevated mode="small">
@@ -168,115 +192,162 @@ export default function Track() {
       </Appbar.Header>
 
       <View style={styles.container}>
-        <MapView
-          style={{ width: "100%", height: "50%" }}
-          initialRegion={{
-            latitude: 0,
-            longitude: 0,
-            latitudeDelta: 0.002,
-            longitudeDelta: 0.002,
-          }}
-          region={{
-            latitude: location ? location.coords.latitude : 0,
-            longitude: location ? location.coords.longitude : 0,
-            latitudeDelta: 0.002,
-            longitudeDelta: 0.002,
-          }}
-        >
-          <Marker
-            coordinate={{
+        <PaperProvider>
+          <MapView
+            style={{ width: "100%", height: "50%" }}
+            initialRegion={{
+              latitude: 0,
+              longitude: 0,
+              latitudeDelta: 0.002,
+              longitudeDelta: 0.002,
+            }}
+            region={{
               latitude: location ? location.coords.latitude : 0,
               longitude: location ? location.coords.longitude : 0,
+              latitudeDelta: 0.002,
+              longitudeDelta: 0.002,
             }}
-            title="Current Location"
           >
-            <Icon name="circle-slice-8" size={24} color={"#120091"} />
-          </Marker>
-
-          <Polyline
-            coordinates={coordinates}
-            strokeColor="#0000AF"
-            strokeWidth={1}
-          />
-        </MapView>
-
-        <View style={styles.cardFlexBox}>
-          <View style={styles.cardFlexBoxRow}>
-            <Card mode="elevated" style={styles.card}>
-              <Card.Content style={styles.cardContent}>
-                <Icon name="clock-outline" size={24} color="#000" />
-                <Text variant="titleMedium">{formatDuration(duration)} h</Text>
-              </Card.Content>
-            </Card>
-
-            <Card mode="elevated" style={styles.card}>
-              <Card.Content style={styles.cardContent}>
-                <Icon name="map-marker-distance" size={24} color="#000" />
-                <Text variant="titleMedium">{distanceToKm(distance)} km</Text>
-              </Card.Content>
-            </Card>
-          </View>
-
-          <View style={styles.cardFlexBoxRow}>
-            <Card mode="elevated" style={styles.card}>
-              <Card.Content style={styles.cardContent}>
-                <Icon name="speedometer" size={24} color="#000" />
-                <Text variant="titleMedium">{formatPace(pace)} min/km</Text>
-              </Card.Content>
-            </Card>
-
-            <Card mode="elevated" style={styles.card}>
-              <Card.Content style={styles.cardContent}>
-                <Icon name="calendar" size={24} color="#000" />
-                <Text variant="titleMedium">
-                  {formatTimestampDay(startTime)}
-                </Text>
-              </Card.Content>
-            </Card>
-          </View>
-
-          <View style={styles.cardFlexBoxRow}>
-            <Card mode="elevated" style={styles.card}>
-              <Card.Content style={styles.cardContent}>
-                <Icon name="calendar-arrow-right" size={24} color="#000" />
-                <Text variant="titleMedium">
-                  {formatTimestampHours(startTime)}
-                </Text>
-              </Card.Content>
-            </Card>
-
-            <Card mode="elevated" style={styles.card}>
-              <Card.Content style={styles.cardContent}>
-                <Icon name="calendar-arrow-left" size={24} color="#000" />
-                <Text variant="titleMedium">
-                  {formatTimestampHours(endTime)}
-                </Text>
-              </Card.Content>
-            </Card>
-          </View>
-        </View>
-
-        <View style={{ alignItems: "center" }}>
-          {!isTracking ? (
-            <Button
-              style={styles.button}
-              mode="contained"
-              icon="shoe-sneaker"
-              onPress={() => startTracking()}
+            <Marker
+              coordinate={{
+                latitude: location ? location.coords.latitude : 0,
+                longitude: location ? location.coords.longitude : 0,
+              }}
+              title="Current Location"
             >
-              Start tracking
-            </Button>
-          ) : (
-            <Button
-              style={styles.button}
-              mode="contained"
-              icon="stop-circle"
-              onPress={() => endTracking()}
+              <Icon name="circle-slice-8" size={24} color={"#120091"} />
+            </Marker>
+
+            <Polyline
+              coordinates={coordinates}
+              strokeColor="#0000AF"
+              strokeWidth={1}
+            />
+          </MapView>
+
+          <View style={styles.cardFlexBox}>
+            <View style={styles.cardFlexBoxRow}>
+              <Card mode="elevated" style={styles.card}>
+                <Card.Content style={styles.cardContent}>
+                  <Icon name="clock-outline" size={24} color="#000" />
+                  <Text variant="titleMedium">
+                    {formatDuration(duration)} h
+                  </Text>
+                </Card.Content>
+              </Card>
+
+              <Card mode="elevated" style={styles.card}>
+                <Card.Content style={styles.cardContent}>
+                  <Icon name="map-marker-distance" size={24} color="#000" />
+                  <Text variant="titleMedium">{distanceToKm(distance)} km</Text>
+                </Card.Content>
+              </Card>
+            </View>
+
+            <View style={styles.cardFlexBoxRow}>
+              <Card mode="elevated" style={styles.card}>
+                <Card.Content style={styles.cardContent}>
+                  <Icon name="speedometer" size={24} color="#000" />
+                  <Text variant="titleMedium">{formatPace(pace)} min/km</Text>
+                </Card.Content>
+              </Card>
+
+              <Card mode="elevated" style={styles.card}>
+                <Card.Content style={styles.cardContent}>
+                  <Icon name="calendar" size={24} color="#000" />
+                  <Text variant="titleMedium">
+                    {formatTimestampDay(startTime)}
+                  </Text>
+                </Card.Content>
+              </Card>
+            </View>
+
+            <View style={styles.cardFlexBoxRow}>
+              <Card mode="elevated" style={styles.card}>
+                <Card.Content style={styles.cardContent}>
+                  <Icon name="calendar-arrow-right" size={24} color="#000" />
+                  <Text variant="titleMedium">
+                    {formatTimestampHours(startTime)}
+                  </Text>
+                </Card.Content>
+              </Card>
+
+              <Card mode="elevated" style={styles.card}>
+                <Card.Content style={styles.cardContent}>
+                  <Icon name="calendar-arrow-left" size={24} color="#000" />
+                  <Text variant="titleMedium">
+                    {formatTimestampHours(endTime)}
+                  </Text>
+                </Card.Content>
+              </Card>
+            </View>
+          </View>
+
+          <View style={{ alignItems: "center" }}>
+            {!isTracking ? (
+              <Button
+                style={styles.button}
+                mode="contained"
+                icon="shoe-sneaker"
+                onPress={() => startTracking()}
+              >
+                Start tracking
+              </Button>
+            ) : (
+              <Button
+                style={styles.button}
+                mode="contained"
+                icon="stop-circle"
+                onPress={() => endTracking()}
+              >
+                End tracking
+              </Button>
+            )}
+          </View>
+
+          <Portal>
+            <Modal
+              visible={visible}
+              dismissable="false"
+              contentContainerStyle={{
+                backgroundColor: "white",
+                padding: 20,
+                borderRadius: 20,
+                height: "100%",
+              }}
+              theme={{ colors: { backdrop: "transparent" } }}
             >
-              End tracking
-            </Button>
-          )}
-        </View>
+              <View>
+                <Text variant="titleLarge">Route finished!</Text>
+                <TextInput
+                  placeholder="Enter a name for your Route"
+                  mode="outlined"
+                  onChangeText={(text) => setName(text)}
+                ></TextInput>
+                <View
+                  style={{
+                    flexDirection: "row",
+                    justifyContent: "space-between",
+                  }}
+                >
+                  <Button buttonColor="grey" mode="contained" icon="cancel" onPress={hideDetails}>
+                    Don't Save
+                  </Button>
+                  <Button
+                    mode="contained"
+                    icon="content-save"
+                    onPress={() => {
+                      uploadDataToFirebase();
+                      setVisible(false);
+                    }}
+                  >
+                    Save
+                  </Button>
+                </View>
+              </View>
+            </Modal>
+          </Portal>
+        </PaperProvider>
       </View>
     </View>
   );
