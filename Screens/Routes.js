@@ -62,16 +62,20 @@ export default function Routes() {
     setSelectedRoute(routes.find((route) => route.key === selectedKey));
   }, [selectedKey]);
 
+  const deleteEntry = async (key) => {
+    remove(ref(database, "routes/" + key));
+    setVisible(false);
+
+    console.log("Deleted: " + key);
+  };
+
   return (
     <View style={{ flex: 1 }}>
       <Appbar.Header elevated mode="small">
         <Appbar.Content title="Routes" titleStyle={{ fontSize: 24 }} />
       </Appbar.Header>
 
-
       <View style={styles.container}>
-      
-
         <Text variant="titleLarge" style={{ marginTop: 10, marginBottom: 10 }}>
           Your Routes
         </Text>
@@ -116,29 +120,26 @@ export default function Routes() {
             <Modal
               visible={visible}
               onDismiss={hideDetails}
-              contentContainerStyle={{ backgroundColor: "white", padding: 20, borderRadius: 20, height: "100%" }}
+              contentContainerStyle={{
+                backgroundColor: "white",
+                padding: 20,
+                borderRadius: 20,
+                height: "100%",
+              }}
               theme={{ colors: { backdrop: "transparent" } }}
             >
               {selectedRoute ? (
                 <View>
-                  
                   <Text>Route Title: {selectedRoute.title}</Text>
-                  <Text>
-                    Distance: {selectedRoute.distance} km
-                  </Text>
-                  <Text>
-                    Duration: {selectedRoute.duration} h
-                  </Text>
+                  <Text>Distance: {selectedRoute.distance} km</Text>
+                  <Text>Duration: {selectedRoute.duration} h</Text>
                   <Text>Pace: {selectedRoute.pace} min/km</Text>
-                  <Text>
-                    Date: {selectedRoute.startTime}{" "}
-                  </Text>
-                  <Text>
-                    StartTime: {selectedRoute.startTime}{" "}
-                  </Text>
-                  <Text>
-                    EndTime: {selectedRoute.endTime}{" "}
-                  </Text>
+                  <Text>Date: {selectedRoute.startTime} </Text>
+                  <Text>StartTime: {selectedRoute.startTime} </Text>
+                  <Text>EndTime: {selectedRoute.endTime} </Text>
+                  <Button onPress={() => deleteEntry(selectedRoute.key)}>
+                    DEL
+                  </Button>
                   <Button onPress={hideDetails}>Close Details</Button>
                 </View>
               ) : (
