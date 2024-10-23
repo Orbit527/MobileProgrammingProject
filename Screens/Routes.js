@@ -7,6 +7,13 @@ import { database } from "../firebaseConfig.js";
 import { Modal, PaperProvider, Portal } from "react-native-paper";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import MapView, { Polyline, Marker } from "react-native-maps";
+import {
+  distanceToKm,
+  formatDuration,
+  formatPace,
+  formatTimestampDay,
+  formatTimestampHours,
+} from "../HelperClass.js";
 
 export default function Routes() {
   const [routes, setRoutes] = useState([]);
@@ -84,14 +91,18 @@ export default function Routes() {
           <Card mode="elevated" style={styles.card}>
             <Card.Content style={styles.cardContent}>
               <Icon name="map-marker-distance" size={24} color="#000" />
-              <Text variant="titleMedium">{overallDistance} km</Text>
+              <Text variant="titleMedium">
+                {distanceToKm(overallDistance)} km
+              </Text>
             </Card.Content>
           </Card>
 
           <Card mode="elevated" style={styles.card}>
             <Card.Content style={styles.cardContent}>
               <Icon name="clock-outline" size={24} color="#000" />
-              <Text variant="titleMedium">{overallDuration} h</Text>
+              <Text variant="titleMedium">
+                {formatDuration(overallDuration)} h
+              </Text>
             </Card.Content>
           </Card>
         </View>
@@ -119,9 +130,9 @@ export default function Routes() {
 
                   <Card.Content style={styles.cardContent}>
                     <Icon name="map-marker-distance" size={24} color="#000" />
-                    <Text>{item.distance} km</Text>
+                    <Text>{distanceToKm(item.distance)} km</Text>
                     <Icon name="clock-outline" size={24} color="#000" />
-                    <Text>{item.duration} h</Text>
+                    <Text>{formatDuration(item.duration)} h</Text>
                     <Button
                       onPress={() => showDetails(item.key)}
                       size={32}
@@ -151,12 +162,22 @@ export default function Routes() {
               {selectedRoute ? (
                 <View>
                   <Text>Route Title: {selectedRoute.title}</Text>
-                  <Text>Distance: {selectedRoute.distance} km</Text>
-                  <Text>Duration: {selectedRoute.duration} h</Text>
-                  <Text>Pace: {selectedRoute.pace} min/km</Text>
-                  <Text>Date: {selectedRoute.startTime} </Text>
-                  <Text>StartTime: {selectedRoute.startTime} </Text>
-                  <Text>EndTime: {selectedRoute.endTime} </Text>
+                  <Text>
+                    Distance: {distanceToKm(selectedRoute.distance)} km
+                  </Text>
+                  <Text>
+                    Duration: {formatDuration(selectedRoute.duration)} h
+                  </Text>
+                  <Text>Pace: {formatPace(selectedRoute.pace)} min/km</Text>
+                  <Text>
+                    Date: {formatTimestampDay(selectedRoute.startTime)}{" "}
+                  </Text>
+                  <Text>
+                    StartTime: {formatTimestampHours(selectedRoute.startTime)}{" "}
+                  </Text>
+                  <Text>
+                    EndTime: {formatTimestampHours(selectedRoute.endTime)}{" "}
+                  </Text>
                   <Button onPress={() => deleteEntry(selectedRoute.key)}>
                     DEL
                   </Button>

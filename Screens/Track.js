@@ -7,6 +7,13 @@ import { Appbar, Button, Card, Text } from "react-native-paper";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import { database } from "../firebaseConfig.js";
 import { styles } from "../StyleSheet.js";
+import {
+  distanceToKm,
+  formatDuration,
+  formatPace,
+  formatTimestampDay,
+  formatTimestampHours,
+} from "../HelperClass.js";
 
 export default function Track() {
   const [isTracking, setIsTracking] = useState(false);
@@ -124,56 +131,6 @@ export default function Track() {
 
       //return location;
     })();
-  };
-
-  const formatDuration = (duration) => {
-    hours = Math.floor(duration / 3600);
-    duration %= 3600;
-    minutes = Math.floor(duration / 60);
-    seconds = duration % 60;
-    return (
-      hours.toString().padStart(2, "0") +
-      ":" +
-      minutes.toString().padStart(2, "0") +
-      ":" +
-      seconds.toString().padStart(2, "0")
-    );
-  };
-
-  const distanceToKm = (distance) => {
-    return Math.round((distance / 1000) * 100) / 100;
-  };
-
-  const formatPace = (pace) => {
-    return Math.round(pace * 100) / 100;
-  };
-
-  const formatTimestampHours = (timestamp) => {
-    if (!timestamp) {
-      return "";
-    }
-    const date = new Date(timestamp);
-    return (
-      date.getHours().toString().padStart(2, "0") +
-      ":" +
-      date.getMinutes().toString().padStart(2, "0") +
-      ":" +
-      date.getSeconds().toString().padStart(2, "0")
-    );
-  };
-
-  const formatTimestampDay = (timestamp) => {
-    if (!timestamp) {
-      return "";
-    }
-    const date = new Date(timestamp);
-    return (
-      date.getDate().toString().padStart(2, "0") +
-      "." +
-      (date.getMonth() + 1).toString().padStart(2, "0") +
-      "." +
-      date.getFullYear()
-    );
   };
 
   const calculateDistance = (c1, c2) => {
