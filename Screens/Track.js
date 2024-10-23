@@ -5,6 +5,8 @@ import { styles } from "../StyleSheet.js";
 import MapView, { Polyline, Marker } from "react-native-maps";
 import * as Location from "expo-location";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
+import { getDatabase, onValue, push, ref } from "firebase/database";
+import { database } from "../firebaseConfig.js";
 
 export default function Track() {
   const [isTracking, setIsTracking] = useState(false);
@@ -35,9 +37,29 @@ export default function Track() {
     setIsTracking(false);
     console.log("Not tracking!");
     setEndTime(Date.now());
+    uploadDataToFirebase();
     Alert.alert("Route finished!");
   };
 
+    const uploadDataToFirebase = () => {
+
+    let pace1 = pace;
+    if (pace === Infinity || pace === NaN) {
+        pace1 = 0;
+    } 
+
+    const obj = {
+      title: "My Route", //TODO: make name settable through textinput
+      coordinates: coordinates,
+      duration: duration,
+      distance: distance,
+      pace: pace1,
+      startTime: startTime,
+      endTime: endTime
+    };
+
+    push(ref(database, "/routes/"), obj);
+  };
 
 
   // Timer was done using this tutorial: https://www.youtube.com/watch?v=xgFgZBijW7M
@@ -225,22 +247,65 @@ export default function Track() {
           />
         </MapView>
 
-        <Text variant="titleLarge">Duration: {duration} sec </Text>
-        <Text variant="titleLarge">
-          Distance: {Math.round(distance * 100) / 100} m{" "}
-        </Text>
-        <Text variant="titleLarge">
-          StartTime: {formatTimestampHours(startTime)}
-        </Text>
-        <Text variant="titleLarge">
-          EndTime: {formatTimestampHours(endTime)}
-        </Text>
-        <Text variant="titleLarge">
-          Today is: {formatTimestampDay(startTime)}
-        </Text>
-        <Text variant="titleLarge">
-          Pace: {Math.round(pace * 100) / 100} min/km
-        </Text>
+        <View style={styles.cardFlexBox}>
+          <View style={styles.cardFlexBoxRow}>
+            <Card mode="elevated" style={styles.card}>
+              <Card.Content style={styles.cardContent}>
+                <Icon name="clock-outline" size={24} color="#000" />
+                <Text variant="titleMedium">{formatDuration(duration)} h</Text>
+              </Card.Content>
+            </Card>
+
+            <Card mode="elevated" style={styles.card}>
+              <Card.Content style={styles.cardContent}>
+                <Icon name="map-marker-distance" size={24} color="#000" />
+                <Text variant="titleMedium">
+                  {distanceToKm(distance)} km
+                </Text>
+              </Card.Content>
+            </Card>
+          </View>
+
+          <View style={styles.cardFlexBoxRow}>
+            <Card mode="elevated" style={styles.card}>
+              <Card.Content style={styles.cardContent}>
+                <Icon name="speedometer" size={24} color="#000" />
+                <Text variant="titleMedium">
+                  {formatPace(pace)} min/km
+                </Text>
+              </Card.Content>
+            </Card>
+
+            <Card mode="elevated" style={styles.card}>
+              <Card.Content style={styles.cardContent}>
+                <Icon name="calendar" size={24} color="#000" />
+                <Text variant="titleMedium">
+                  {formatTimestampDay(startTime)}
+                </Text>
+              </Card.Content>
+            </Card>
+          </View>
+
+          <View style={styles.cardFlexBoxRow}>
+            <Card mode="elevated" style={styles.card}>
+              <Card.Content style={styles.cardContent}>
+                <Icon name="calendar-arrow-right" size={24} color="#000" />
+                <Text variant="titleMedium">
+                  {formatTimestampHours(startTime)}
+                </Text>
+              </Card.Content>
+            </Card>
+
+            <Card mode="elevated" style={styles.card}>
+              <Card.Content style={styles.cardContent}>
+                <Icon name="calendar-arrow-left" size={24} color="#000" />
+                <Text variant="titleMedium">
+                  {formatTimestampHours(endTime)}
+                </Text>
+              </Card.Content>
+            </Card>
+          </View>
+        </View>
 
         <View style={{ alignItems: "center" }}>
           {!isTracking ? (
