@@ -1,26 +1,24 @@
-import { useEffect, useState } from "react";
-import { StyleSheet, View, ScrollView, Alert } from "react-native";
-import { Appbar, Button, Card, Text } from "react-native-paper";
-import { styles } from "../StyleSheet.js";
-import MapView, { Polyline, Marker } from "react-native-maps";
 import * as Location from "expo-location";
+import { push, ref } from "firebase/database";
+import { useEffect, useState } from "react";
+import { Alert, View } from "react-native";
+import MapView, { Marker, Polyline } from "react-native-maps";
+import { Appbar, Button, Card, Text } from "react-native-paper";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
-import { getDatabase, onValue, push, ref } from "firebase/database";
 import { database } from "../firebaseConfig.js";
+import { styles } from "../StyleSheet.js";
 
 export default function Track() {
   const [isTracking, setIsTracking] = useState(false);
   const [location, setLocation] = useState(null);
-  const [coordinates, setCoordinates] = useState([{ latitude: 0, longitude: 0 }]);
+  const [coordinates, setCoordinates] = useState([
+    { latitude: 0, longitude: 0 },
+  ]);
   const [duration, setDuration] = useState(0);
   const [distance, setDistance] = useState(0);
   const [pace, setPace] = useState(0);
   const [startTime, setStartTime] = useState();
   const [endTime, setEndTime] = useState();
-
-  const trackRoute = () => {
-    setIsTracking(!isTracking);
-  };
 
   const startTracking = () => {
     setIsTracking(true);
@@ -41,12 +39,11 @@ export default function Track() {
     Alert.alert("Route finished!");
   };
 
-    const uploadDataToFirebase = () => {
-
+  const uploadDataToFirebase = () => {
     let pace1 = pace;
     if (pace === Infinity || pace === NaN) {
-        pace1 = 0;
-    } 
+      pace1 = 0;
+    }
 
     const obj = {
       title: "My Route", //TODO: make name settable through textinput
@@ -55,12 +52,11 @@ export default function Track() {
       distance: distance,
       pace: pace1,
       startTime: startTime,
-      endTime: endTime
+      endTime: endTime,
     };
 
     push(ref(database, "/routes/"), obj);
   };
-
 
   // Timer was done using this tutorial: https://www.youtube.com/watch?v=xgFgZBijW7M
   // Timer for setting duration
@@ -143,15 +139,15 @@ export default function Track() {
       seconds.toString().padStart(2, "0")
     );
   };
-  
+
   const distanceToKm = (distance) => {
     return Math.round((distance / 1000) * 100) / 100;
   };
-  
+
   const formatPace = (pace) => {
     return Math.round(pace * 100) / 100;
   };
-  
+
   const formatTimestampHours = (timestamp) => {
     if (!timestamp) {
       return "";
@@ -165,7 +161,7 @@ export default function Track() {
       date.getSeconds().toString().padStart(2, "0")
     );
   };
-  
+
   const formatTimestampDay = (timestamp) => {
     if (!timestamp) {
       return "";
@@ -174,7 +170,7 @@ export default function Track() {
     return (
       date.getDate().toString().padStart(2, "0") +
       "." +
-      ((date.getMonth() + 1).toString().padStart(2, "0")) +
+      (date.getMonth() + 1).toString().padStart(2, "0") +
       "." +
       date.getFullYear()
     );
@@ -259,9 +255,7 @@ export default function Track() {
             <Card mode="elevated" style={styles.card}>
               <Card.Content style={styles.cardContent}>
                 <Icon name="map-marker-distance" size={24} color="#000" />
-                <Text variant="titleMedium">
-                  {distanceToKm(distance)} km
-                </Text>
+                <Text variant="titleMedium">{distanceToKm(distance)} km</Text>
               </Card.Content>
             </Card>
           </View>
@@ -270,9 +264,7 @@ export default function Track() {
             <Card mode="elevated" style={styles.card}>
               <Card.Content style={styles.cardContent}>
                 <Icon name="speedometer" size={24} color="#000" />
-                <Text variant="titleMedium">
-                  {formatPace(pace)} min/km
-                </Text>
+                <Text variant="titleMedium">{formatPace(pace)} min/km</Text>
               </Card.Content>
             </Card>
 
