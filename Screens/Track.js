@@ -6,7 +6,6 @@ import MapView, { Marker, Polyline } from "react-native-maps";
 import {
   Appbar,
   Button,
-  Card,
   Modal,
   PaperProvider,
   Portal,
@@ -14,14 +13,9 @@ import {
   TextInput,
 } from "react-native-paper";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
+import RouteParameters from "../Components/RouteParametersCards.js";
 import { database } from "../firebaseConfig.js";
-import {
-  distanceToKm,
-  formatDuration,
-  formatPace,
-  formatTimestampDay,
-  formatTimestampHours,
-} from "../HelperClass.js";
+import { formatTimestampDay } from "../HelperClass.js";
 import { styles } from "../StyleSheet.js";
 
 export default function Track() {
@@ -227,63 +221,13 @@ export default function Track() {
             />
           </MapView>
 
-          <View style={styles.cardFlexBox}>
-            <View style={styles.cardFlexBoxRow}>
-              <Card mode="elevated" style={styles.card}>
-                <Card.Content style={styles.cardContent}>
-                  <Icon name="clock-outline" size={24} color="#000" />
-                  <Text variant="titleMedium">
-                    {formatDuration(duration)} h
-                  </Text>
-                </Card.Content>
-              </Card>
-
-              <Card mode="elevated" style={styles.card}>
-                <Card.Content style={styles.cardContent}>
-                  <Icon name="map-marker-distance" size={24} color="#000" />
-                  <Text variant="titleMedium">{distanceToKm(distance)} km</Text>
-                </Card.Content>
-              </Card>
-            </View>
-
-            <View style={styles.cardFlexBoxRow}>
-              <Card mode="elevated" style={styles.card}>
-                <Card.Content style={styles.cardContent}>
-                  <Icon name="speedometer" size={24} color="#000" />
-                  <Text variant="titleMedium">{formatPace(pace)} min/km</Text>
-                </Card.Content>
-              </Card>
-
-              <Card mode="elevated" style={styles.card}>
-                <Card.Content style={styles.cardContent}>
-                  <Icon name="calendar" size={24} color="#000" />
-                  <Text variant="titleMedium">
-                    {formatTimestampDay(startTime)}
-                  </Text>
-                </Card.Content>
-              </Card>
-            </View>
-
-            <View style={styles.cardFlexBoxRow}>
-              <Card mode="elevated" style={styles.card}>
-                <Card.Content style={styles.cardContent}>
-                  <Icon name="calendar-arrow-right" size={24} color="#000" />
-                  <Text variant="titleMedium">
-                    {formatTimestampHours(startTime)}
-                  </Text>
-                </Card.Content>
-              </Card>
-
-              <Card mode="elevated" style={styles.card}>
-                <Card.Content style={styles.cardContent}>
-                  <Icon name="calendar-arrow-left" size={24} color="#000" />
-                  <Text variant="titleMedium">
-                    {formatTimestampHours(endTime)}
-                  </Text>
-                </Card.Content>
-              </Card>
-            </View>
-          </View>
+          <RouteParameters
+            duration={duration}
+            distance={distance}
+            pace={pace}
+            startTime={startTime}
+            endTime={endTime}
+          />
 
           <View style={{ alignItems: "center" }}>
             {!isTracking ? (

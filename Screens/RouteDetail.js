@@ -1,16 +1,9 @@
 import { ref, remove } from "firebase/database";
 import { View } from "react-native";
 import MapView, { Polyline } from "react-native-maps";
-import { Appbar, Button, Card, Text } from "react-native-paper";
-import Icon from "react-native-vector-icons/MaterialCommunityIcons";
+import { Appbar, Button, Text } from "react-native-paper";
+import RouteParameters from "../Components/RouteParametersCards.js";
 import { database } from "../firebaseConfig.js";
-import {
-  distanceToKm,
-  formatDuration,
-  formatPace,
-  formatTimestampDay,
-  formatTimestampHours,
-} from "../HelperClass.js";
 import { styles } from "../StyleSheet.js";
 
 export default function RouteDetail({ navigation, route }) {
@@ -54,67 +47,13 @@ export default function RouteDetail({ navigation, route }) {
           )}
         </MapView>
 
-        <View style={styles.cardFlexBox}>
-          <View style={styles.cardFlexBoxRow}>
-            <Card mode="elevated" style={styles.card}>
-              <Card.Content style={styles.cardContent}>
-                <Icon name="clock-outline" size={24} color="#000" />
-                <Text variant="titleMedium">
-                  {formatDuration(data.duration)} h
-                </Text>
-              </Card.Content>
-            </Card>
-
-            <Card mode="elevated" style={styles.card}>
-              <Card.Content style={styles.cardContent}>
-                <Icon name="map-marker-distance" size={24} color="#000" />
-                <Text variant="titleMedium">
-                  {distanceToKm(data.distance)} km
-                </Text>
-              </Card.Content>
-            </Card>
-          </View>
-
-          <View style={styles.cardFlexBoxRow}>
-            <Card mode="elevated" style={styles.card}>
-              <Card.Content style={styles.cardContent}>
-                <Icon name="speedometer" size={24} color="#000" />
-                <Text variant="titleMedium">
-                  {formatPace(data.pace)} min/km
-                </Text>
-              </Card.Content>
-            </Card>
-
-            <Card mode="elevated" style={styles.card}>
-              <Card.Content style={styles.cardContent}>
-                <Icon name="calendar" size={24} color="#000" />
-                <Text variant="titleMedium">
-                  {formatTimestampDay(data.startTime)}
-                </Text>
-              </Card.Content>
-            </Card>
-          </View>
-
-          <View style={styles.cardFlexBoxRow}>
-            <Card mode="elevated" style={styles.card}>
-              <Card.Content style={styles.cardContent}>
-                <Icon name="calendar-arrow-right" size={24} color="#000" />
-                <Text variant="titleMedium">
-                  {formatTimestampHours(data.startTime)}
-                </Text>
-              </Card.Content>
-            </Card>
-
-            <Card mode="elevated" style={styles.card}>
-              <Card.Content style={styles.cardContent}>
-                <Icon name="calendar-arrow-left" size={24} color="#000" />
-                <Text variant="titleMedium">
-                  {formatTimestampHours(data.endTime)}
-                </Text>
-              </Card.Content>
-            </Card>
-          </View>
-        </View>
+        <RouteParameters
+          duration={data.duration}
+          distance={data.distance}
+          pace={data.pace}
+          startTime={data.startTime}
+          endTime={data.endTime}
+        />
 
         <Button
           mode="contained"
