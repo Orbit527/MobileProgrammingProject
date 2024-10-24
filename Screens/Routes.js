@@ -1,25 +1,14 @@
+import { onValue, ref } from "firebase/database";
 import React, { useEffect, useState } from "react";
 import { FlatList, View } from "react-native";
-import { Appbar, Button, Card, Divider, Text } from "react-native-paper";
-import { styles } from "../StyleSheet.js";
-import { onValue, ref, remove } from "firebase/database";
-import { database } from "../firebaseConfig.js";
-import { Modal, PaperProvider, Portal } from "react-native-paper";
+import { Appbar, Button, Card, PaperProvider, Text } from "react-native-paper";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
-import MapView, { Polyline, Marker } from "react-native-maps";
-import {
-  distanceToKm,
-  formatDuration,
-  formatPace,
-  formatTimestampDay,
-  formatTimestampHours,
-} from "../HelperClass.js";
+import { database } from "../firebaseConfig.js";
+import { distanceToKm, formatDuration } from "../HelperClass.js";
+import { styles } from "../StyleSheet.js";
 
-export default function Routes() {
+export default function Routes({ navigation }) {
   const [routes, setRoutes] = useState([]);
-  const [visible, setVisible] = React.useState(false);
-  const [selectedKey, setSelectedKey] = useState(null);
-  const [selectedRoute, setSelectedRoute] = useState("");
   const [overallDistance, setOverallDistance] = useState(0);
   const [overallDuration, setOverallDuration] = useState(0);
 
@@ -64,24 +53,8 @@ export default function Routes() {
   }, []);
 
   const showDetails = (key) => {
-    setVisible(true);
-    setSelectedKey(key);
-  };
-
-  const hideDetails = () => {
-    setVisible(false);
-    setSelectedKey(null);
-  };
-
-  useEffect(() => {
-    setSelectedRoute(routes.find((route) => route.key === selectedKey));
-  }, [selectedKey]);
-
-  const deleteEntry = async (key) => {
-    remove(ref(database, "routes/" + key));
-    setVisible(false);
-
-    console.log("Deleted: " + key);
+    const route = routes.find((route) => route.key === key);
+    navigation.navigate("RouteDetail", { data: route });
   };
 
   return (
@@ -121,7 +94,9 @@ export default function Routes() {
 
         <PaperProvider>
           <FlatList
-            ListEmptyComponent={<Text variant="titleMedium">No Routes yet...</Text>}
+            ListEmptyComponent={
+              <Text variant="titleMedium">No Routes yet...</Text>
+            }
             data={routes}
             renderItem={({ item }) => (
               <View
@@ -155,48 +130,6 @@ export default function Routes() {
               </View>
             )}
           />
-
-          <Portal>
-            <Modal
-              visible={visible}
-              onDismiss={hideDetails}
-              contentContainerStyle={{
-                backgroundColor: "white",
-                padding: 20,
-                borderRadius: 20,
-                height: "100%",
-              }}
-              theme={{ colors: { backdrop: "transparent" } }}
-            >
-              {selectedRoute ? (
-                <View>
-                  <Text>Route Title: {selectedRoute.title}</Text>
-                  <Text>
-                    Distance: {distanceToKm(selectedRoute.distance)} km
-                  </Text>
-                  <Text>
-                    Duration: {formatDuration(selectedRoute.duration)} h
-                  </Text>
-                  <Text>Pace: {formatPace(selectedRoute.pace)} min/km</Text>
-                  <Text>
-                    Date: {formatTimestampDay(selectedRoute.startTime)}{" "}
-                  </Text>
-                  <Text>
-                    StartTime: {formatTimestampHours(selectedRoute.startTime)}{" "}
-                  </Text>
-                  <Text>
-                    EndTime: {formatTimestampHours(selectedRoute.endTime)}{" "}
-                  </Text>
-                  <Button onPress={() => deleteEntry(selectedRoute.key)}>
-                    DEL
-                  </Button>
-                  <Button onPress={hideDetails}>Close Details</Button>
-                </View>
-              ) : (
-                <Text>Loading route details</Text>
-              )}
-            </Modal>
-          </Portal>
         </PaperProvider>
       </View>
     </View>

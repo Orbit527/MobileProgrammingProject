@@ -1,7 +1,7 @@
 import * as Location from "expo-location";
 import { push, ref } from "firebase/database";
 import React, { useEffect, useState } from "react";
-import { Alert, View } from "react-native";
+import { View } from "react-native";
 import MapView, { Marker, Polyline } from "react-native-maps";
 import {
   Appbar,
@@ -15,7 +15,6 @@ import {
 } from "react-native-paper";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import { database } from "../firebaseConfig.js";
-import { styles } from "../StyleSheet.js";
 import {
   distanceToKm,
   formatDuration,
@@ -23,6 +22,7 @@ import {
   formatTimestampDay,
   formatTimestampHours,
 } from "../HelperClass.js";
+import { styles } from "../StyleSheet.js";
 
 export default function Track() {
   const [isTracking, setIsTracking] = useState(false);
@@ -58,8 +58,10 @@ export default function Track() {
   };
 
   const uploadDataToFirebase = () => {
+    console.log("Attempting push...");
+
     let newPace = pace;
-    if (pace === Infinity || pace === NaN) {
+    if (pace === Infinity) {
       newPace = 0;
     }
 
@@ -330,7 +332,12 @@ export default function Track() {
                     justifyContent: "space-between",
                   }}
                 >
-                  <Button buttonColor="grey" mode="contained" icon="cancel" onPress={hideDetails}>
+                  <Button
+                    buttonColor="grey"
+                    mode="contained"
+                    icon="cancel"
+                    onPress={hideDetails}
+                  >
                     Don't Save
                   </Button>
                   <Button

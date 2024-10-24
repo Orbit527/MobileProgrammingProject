@@ -1,6 +1,6 @@
-import {  View } from "react-native";
+import { View } from "react-native";
 import { Appbar, Text } from "react-native-paper";
-import { styles } from "../StyleSheet.js"
+import { styles } from "../StyleSheet.js";
 
 export default function Home() {
   return (
@@ -11,7 +11,6 @@ export default function Home() {
 
       <View style={styles.container}>
         <Text variant="titleLarge">Home</Text>
-        <Text variant="titleLarge">Content</Text>
       </View>
     </View>
   );

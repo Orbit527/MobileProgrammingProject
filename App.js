@@ -1,18 +1,19 @@
-import { NavigationContainer } from "@react-navigation/native";
-import { StatusBar } from "expo-status-bar";
-
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { PaperProvider, BottomNavigation } from "react-native-paper";
-import Home from "./Screens/Home";
-import Settings from "./Screens/Settings";
-import Routes from "./Screens/Routes";
-import Track from "./Screens/Track";
-import Profile from "./Screens/Profile";
+import { NavigationContainer } from "@react-navigation/native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { StatusBar } from "expo-status-bar";
+import { BottomNavigation, PaperProvider } from "react-native-paper";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
+import Home from "./Screens/Home";
+import Profile from "./Screens/Profile";
+import Settings from "./Screens/Settings";
+import Track from "./Screens/Track";
 
-import { CommonActions } from '@react-navigation/native';
+import { CommonActions } from "@react-navigation/native";
+import RoutesStack from "./RoutesStack";
 
 const Tab = createBottomTabNavigator();
+const Stack = createNativeStackNavigator();
 
 // Nagivation was mostly taken from: https://callstack.github.io/react-native-paper/docs/components/BottomNavigation/BottomNavigationBar
 
@@ -20,7 +21,6 @@ export default function App() {
   return (
     <PaperProvider>
       <NavigationContainer>
-        
         <Tab.Navigator
           screenOptions={{
             headerShown: false,
@@ -78,8 +78,8 @@ export default function App() {
             }}
           />
           <Tab.Screen
-            name="Routes"
-            component={Routes}
+            name="RoutesStack"
+            component={RoutesStack}
             options={{
               tabBarLabel: "Routes",
               tabBarIcon: ({ color, size }) => {
