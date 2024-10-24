@@ -28,6 +28,14 @@ export default function Routes() {
     onValue(routesRef, (snapshot) => {
       data = snapshot.val();
 
+      if (!data) {
+        console.log("EMPTY!!!");
+        setRoutes([]);
+        setOverallDistance(0);
+        setOverallDuration(0);
+        return;
+      }
+
       //TODO: think of something better; look at teachers solution
       const dataWithKey = Object.entries(data).map(([key, other]) => ({
         key,
@@ -113,6 +121,7 @@ export default function Routes() {
 
         <PaperProvider>
           <FlatList
+            ListEmptyComponent={<Text variant="titleMedium">No Routes yet...</Text>}
             data={routes}
             renderItem={({ item }) => (
               <View
