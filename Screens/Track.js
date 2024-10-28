@@ -1,7 +1,7 @@
 import * as Location from "expo-location";
 import { push, ref } from "firebase/database";
 import React, { useEffect, useState } from "react";
-import { View } from "react-native";
+import { Alert, View } from "react-native";
 import {
   Appbar,
   Button,
@@ -9,15 +9,13 @@ import {
   PaperProvider,
   Portal,
   Text,
-  TextInput
+  TextInput,
 } from "react-native-paper";
-import { database } from "../firebaseConfig.js";
-import {
-  formatTimestampDay
-} from "../HelperClass.js";
-import { styles } from "../StyleSheet.js";
 import RouteMap from "../Components/RouteMap.js";
 import RouteParametersCards from "../Components/RouteParametersCards.js";
+import { database } from "../firebaseConfig.js";
+import { formatTimestampDay } from "../HelperClass.js";
+import { styles } from "../StyleSheet.js";
 
 export default function Track() {
   const [isTracking, setIsTracking] = useState(false);
@@ -46,10 +44,14 @@ export default function Track() {
   };
 
   const endTracking = () => {
-    setIsTracking(false);
-    console.log("Not tracking!");
-    setEndTime(Date.now());
-    showDetails();
+    if (duration > 10) {
+      setIsTracking(false);
+      console.log("Not tracking!");
+      setEndTime(Date.now());
+      showDetails();
+    } else {
+      Alert.alert("You need to run at least 10 seconds!");
+    }
   };
 
   const uploadDataToFirebase = () => {
@@ -133,7 +135,7 @@ export default function Track() {
 
       setPace(duration / 60 / (distance / 1000));
     }
-  }
+  };
 
   const getLocation = () => {
     (async () => {
