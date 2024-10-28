@@ -44,13 +44,13 @@ export default function Track() {
   };
 
   const endTracking = () => {
-    if (duration > 10) {
+    if (duration > 30) {
       setIsTracking(false);
       console.log("Not tracking!");
       setEndTime(Date.now());
       showDetails();
     } else {
-      Alert.alert("You need to run at least 10 seconds!");
+      Alert.alert("You need to run at least 30 seconds!");
     }
   };
 
@@ -240,22 +240,28 @@ export default function Track() {
               contentContainerStyle={{
                 backgroundColor: "white",
                 padding: 20,
-                borderRadius: 20,
+                borderRadius: 10,
                 height: "100%",
               }}
               theme={{ colors: { backdrop: "transparent" } }}
             >
               <View>
-                <Text variant="titleLarge">Route finished!</Text>
+                <Text variant="titleLarge" style={{ marginBottom: 15 }}>
+                  Route finished!
+                </Text>
                 <TextInput
-                  placeholder="Enter a name for your Route"
+                  style={{ marginBottom: 15 }}
+                  placeholder="Enter a name for your Route..."
                   mode="outlined"
+                  maxLength={23}
                   onChangeText={(text) => setName(text)}
                 ></TextInput>
                 <View
                   style={{
                     flexDirection: "row",
                     justifyContent: "space-between",
+                    marginLeft: 20,
+                    marginRight: 20
                   }}
                 >
                   <Button
@@ -264,7 +270,7 @@ export default function Track() {
                     icon="cancel"
                     onPress={hideDetails}
                   >
-                    Don't Save
+                    Discard
                   </Button>
                   <Button
                     mode="contained"
