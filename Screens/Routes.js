@@ -1,7 +1,7 @@
 import { onValue, ref } from "firebase/database";
 import React, { useEffect, useState } from "react";
 import { FlatList, View } from "react-native";
-import { Appbar, Button, Card, PaperProvider, Text } from "react-native-paper";
+import { ActivityIndicator, Appbar, Button, Card, PaperProvider, Text } from "react-native-paper";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import { database } from "../firebaseConfig.js";
 import { distanceToKm, formatDuration } from "../HelperClass.js";
@@ -9,6 +9,7 @@ import { styles } from "../StyleSheet.js";
 
 export default function Routes({ navigation }) {
   const [routes, setRoutes] = useState([]);
+  const [loading, setLoading] = useState(false);
   const [overallDistance, setOverallDistance] = useState(0);
   const [overallDuration, setOverallDuration] = useState(0);
 
@@ -18,21 +19,19 @@ export default function Routes({ navigation }) {
       data = snapshot.val();
 
       if (!data) {
-        console.log("EMPTY!!!");
         setRoutes([]);
         setOverallDistance(0);
         setOverallDuration(0);
         return;
       }
 
-      //TODO: think of something better; look at teachers solution
       const dataWithKey = Object.entries(data).map(([key, other]) => ({
         key,
         ...other,
       }));
 
-      console.log(dataWithKey);
       setRoutes(dataWithKey);
+      setLoading(true);
 
       let totalDistance = Object.values(dataWithKey).reduce(
         (acc, { distance }) => {
@@ -92,7 +91,7 @@ export default function Routes({ navigation }) {
           Your Routes
         </Text>
 
-        <PaperProvider>
+        {loading ? (
           <FlatList
             ListEmptyComponent={
               <Text variant="titleMedium">No Routes yet...</Text>
@@ -130,7 +129,9 @@ export default function Routes({ navigation }) {
               </View>
             )}
           />
-        </PaperProvider>
+        ) : (
+          <ActivityIndicator animating={true} />
+        )}
       </View>
     </View>
   );
