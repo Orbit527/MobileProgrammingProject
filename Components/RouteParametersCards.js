@@ -10,7 +10,7 @@ import {
 } from "../HelperClass.js";
 import { styles } from "../StyleSheet.js";
 
-export default function RouteParameters({
+export default function RouteParametersCards({
   duration,
   distance,
   pace,

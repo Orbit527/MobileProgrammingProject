@@ -2,9 +2,10 @@ import { ref, remove } from "firebase/database";
 import { View } from "react-native";
 import MapView, { Polyline } from "react-native-maps";
 import { Appbar, Button, Text } from "react-native-paper";
-import RouteParameters from "../Components/RouteParametersCards.js";
+import RouteParametersCards from "../Components/RouteParametersCards.js";
 import { database } from "../firebaseConfig.js";
 import { styles } from "../StyleSheet.js";
+import RouteMap from "../Components/RouteMap.js";
 
 export default function RouteDetail({ navigation, route }) {
   const { data } = route.params;
@@ -27,6 +28,14 @@ export default function RouteDetail({ navigation, route }) {
       <View style={styles.container}>
         <Text variant="titleLarge">{data.title}</Text>
 
+        <RouteMap
+          locationLat={data.coordinates[0].latitude}
+          locationLong={data.coordinates[0].longitude}
+          coordinates={data.coordinates}
+          tracking={false}
+        />
+
+        {/*
         <MapView
           style={{ width: "100%", height: "50%" }}
           initialRegion={{
@@ -46,8 +55,9 @@ export default function RouteDetail({ navigation, route }) {
             <Text>No data</Text>
           )}
         </MapView>
+        */}
 
-        <RouteParameters
+        <RouteParametersCards
           duration={data.duration}
           distance={data.distance}
           pace={data.pace}

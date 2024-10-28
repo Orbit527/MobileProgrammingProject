@@ -2,7 +2,6 @@ import * as Location from "expo-location";
 import { push, ref } from "firebase/database";
 import React, { useEffect, useState } from "react";
 import { View } from "react-native";
-import MapView, { Marker, Polyline } from "react-native-maps";
 import {
   Appbar,
   Button,
@@ -10,13 +9,15 @@ import {
   PaperProvider,
   Portal,
   Text,
-  TextInput,
+  TextInput
 } from "react-native-paper";
-import Icon from "react-native-vector-icons/MaterialCommunityIcons";
-import RouteParameters from "../Components/RouteParametersCards.js";
 import { database } from "../firebaseConfig.js";
-import { formatTimestampDay } from "../HelperClass.js";
+import {
+  formatTimestampDay
+} from "../HelperClass.js";
 import { styles } from "../StyleSheet.js";
+import RouteMap from "../Components/RouteMap.js";
+import RouteParametersCards from "../Components/RouteParametersCards.js";
 
 export default function Track() {
   const [isTracking, setIsTracking] = useState(false);
@@ -117,6 +118,10 @@ export default function Track() {
 
   // Update locations when current location changes
   useEffect(() => {
+    saveLocationToCoordinates();
+  }, [location]);
+
+  const saveLocationToCoordinates = () => {
     if (isTracking) {
       setCoordinates((prevLocations) => [
         ...prevLocations,
@@ -128,7 +133,7 @@ export default function Track() {
 
       setPace(duration / 60 / (distance / 1000));
     }
-  }, [location]);
+  }
 
   const getLocation = () => {
     (async () => {
@@ -189,39 +194,14 @@ export default function Track() {
 
       <View style={styles.container}>
         <PaperProvider>
-          <MapView
-            style={{ width: "100%", height: "50%" }}
-            initialRegion={{
-              latitude: 0,
-              longitude: 0,
-              latitudeDelta: 0.002,
-              longitudeDelta: 0.002,
-            }}
-            region={{
-              latitude: location ? location.coords.latitude : 0,
-              longitude: location ? location.coords.longitude : 0,
-              latitudeDelta: 0.002,
-              longitudeDelta: 0.002,
-            }}
-          >
-            <Marker
-              coordinate={{
-                latitude: location ? location.coords.latitude : 0,
-                longitude: location ? location.coords.longitude : 0,
-              }}
-              title="Current Location"
-            >
-              <Icon name="circle-slice-8" size={24} color={"#120091"} />
-            </Marker>
+          <RouteMap
+            locationLat={location ? location.coords.latitude : 0}
+            locationLong={location ? location.coords.longitude : 0}
+            coordinates={coordinates}
+            tracking={true}
+          />
 
-            <Polyline
-              coordinates={coordinates}
-              strokeColor="#0000AF"
-              strokeWidth={1}
-            />
-          </MapView>
-
-          <RouteParameters
+          <RouteParametersCards
             duration={duration}
             distance={distance}
             pace={pace}
