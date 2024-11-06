@@ -6,18 +6,19 @@ export const styles = StyleSheet.create({
     margin: 20,
   },
   cardFlexBox: {
-flex: 1
+    flex: 1,
   },
   cardFlexBoxRow: {
     flexDirection: "row",
     justifyContent: "space-between",
-    
   },
   card: {
     flex: 1,
     width: "50%",
     height: 65,
-    margin: 5,
+    margin: 1,
+    borderRadius: 10,
+    backgroundColor: "white",
     justifyContent: "space-around",
   },
   cardContent: {
@@ -30,12 +31,10 @@ flex: 1
     height: 50,
     justifyContent: "center",
   },
-
   cardLong: {
     flex: 1,
     width: "100%",
-    //height: 65,
     margin: 0,
     justifyContent: "space-around",
-  }
+  },
 });

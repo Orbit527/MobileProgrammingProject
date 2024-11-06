@@ -54,14 +54,14 @@ export default function RouteParametersCards({
       <View style={styles.cardFlexBoxRow}>
         <Card mode="elevated" style={styles.card}>
           <Card.Content style={styles.cardContent}>
-            <Icon name="calendar-arrow-right" size={24} color="#000" />
+            <Icon name="clock-start" size={24} color="#000" />
             <Text variant="titleMedium">{formatTimestampHours(startTime)}</Text>
           </Card.Content>
         </Card>
 
         <Card mode="elevated" style={styles.card}>
           <Card.Content style={styles.cardContent}>
-            <Icon name="calendar-arrow-left" size={24} color="#000" />
+            <Icon name="clock-end" size={24} color="#000" />
             <Text variant="titleMedium">{formatTimestampHours(endTime)}</Text>
           </Card.Content>
         </Card>
