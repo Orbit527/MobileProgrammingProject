@@ -7,8 +7,8 @@ import {
   formatPace,
   formatTimestampDay,
   formatTimestampHours,
-} from "../HelperClass.js";
-import { styles } from "../StyleSheet.js";
+} from "../Helper/HelperClass.js";
+import { styles } from "../Styles/StyleSheet.js";
 
 export default function RouteParametersCards({
   duration,

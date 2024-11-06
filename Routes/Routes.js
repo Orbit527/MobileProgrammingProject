@@ -11,8 +11,8 @@ import {
 } from "react-native-paper";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import { database, firebaseAuth } from "../firebaseConfig.js";
-import { distanceToKm, formatDuration } from "../HelperClass.js";
-import { styles } from "../StyleSheet.js";
+import { distanceToKm, formatDuration } from "../Helper/HelperClass.js";
+import { styles } from "../Styles/StyleSheet.js";
 
 export default function Routes({ navigation }) {
   const [routes, setRoutes] = useState([]);

@@ -14,8 +14,8 @@ import {
 import RouteMap from "../Components/RouteMap.js";
 import RouteParametersCards from "../Components/RouteParametersCards.js";
 import { database, firebaseAuth } from "../firebaseConfig.js";
-import { formatTimestampDay } from "../HelperClass.js";
-import { styles } from "../StyleSheet.js";
+import { formatTimestampDay } from "../Helper/HelperClass.js";
+import { styles } from "../Styles/StyleSheet.js";
 import { onAuthStateChanged } from "firebase/auth";
 
 export default function Track() {

@@ -1,6 +1,6 @@
 import { View } from "react-native";
 import { Appbar, Text } from "react-native-paper";
-import { styles } from "../StyleSheet.js";
+import { styles } from "../Styles/StyleSheet.js";
 
 export default function Home() {
   return (

@@ -6,7 +6,7 @@ import { Appbar, Button } from "react-native-paper";
 import RouteMap from "../Components/RouteMap.js";
 import RouteParametersCards from "../Components/RouteParametersCards.js";
 import { database, firebaseAuth } from "../firebaseConfig.js";
-import { styles } from "../StyleSheet.js";
+import { styles } from "../Styles/StyleSheet.js";
 
 export default function RouteDetail({ navigation, route }) {
   const { data } = route.params;

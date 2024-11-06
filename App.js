@@ -4,13 +4,13 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { StatusBar } from "expo-status-bar";
 import { BottomNavigation, PaperProvider } from "react-native-paper";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
-import Home from "./Screens/Home";
-import Profile from "./Screens/Profile";
-import Settings from "./Screens/Settings";
-import Track from "./Screens/Track";
+import Home from "./Routes/Home";
+import Profile from "./Routes/Profile";
+import Settings from "./Routes/Settings";
+import Track from "./Routes/Track";
 
 import { CommonActions } from "@react-navigation/native";
-import RoutesStack from "./RoutesStack";
+import RoutesStack from "./Routes/RoutesStack";
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();

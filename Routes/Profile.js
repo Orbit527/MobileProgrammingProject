@@ -7,7 +7,7 @@ import { useEffect, useState } from "react";
 import { KeyboardAvoidingView, View } from "react-native";
 import { Appbar, Button, Text, TextInput } from "react-native-paper";
 import { firebaseAuth } from "../firebaseConfig.js";
-import { styles } from "../StyleSheet.js";
+import { styles } from "../Styles/StyleSheet.js";
 
 export default function Profile() {
   const [email, setEmail] = useState("");
