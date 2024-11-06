@@ -24,7 +24,6 @@ export default function Routes({ navigation }) {
 
   useEffect(() => {
     onAuthStateChanged(firebaseAuth, (user) => {
-      console.log("user:" + user);
       setUser(user);
     });
   }, []);

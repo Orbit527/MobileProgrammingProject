@@ -1,31 +1,24 @@
 import {
-  equalTo,
-  onValue,
-  orderByChild,
-  push,
-  query,
-  ref,
-} from "firebase/database";
-import { useEffect, useState } from "react";
-import { KeyboardAvoidingView, View } from "react-native";
-import { Appbar, Button, Text, TextInput } from "react-native-paper";
-import { database, firebaseAuth } from "../firebaseConfig.js";
-import { styles } from "../StyleSheet.js";
-import {
   createUserWithEmailAndPassword,
   onAuthStateChanged,
   signInWithEmailAndPassword,
-  User,
 } from "firebase/auth";
+import { useEffect, useState } from "react";
+import { KeyboardAvoidingView, View } from "react-native";
+import { Appbar, Button, Text, TextInput } from "react-native-paper";
+import { firebaseAuth } from "../firebaseConfig.js";
+import { styles } from "../StyleSheet.js";
 
 export default function Profile() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
+  const [passwordHidden, setPasswordHidden] = useState(true);
   const auth = firebaseAuth;
 
   const [user, setUser] = useState(null);
 
+  // from video: https://www.youtube.com/watch?v=ONAVmsGW6-M
   const signIn = async () => {
     console.log("signIn");
     try {
@@ -55,7 +48,7 @@ export default function Profile() {
 
   const signOut = () => {
     firebaseAuth.signOut();
-  }
+  };
 
   useEffect(() => {
     onAuthStateChanged(firebaseAuth, (user) => {
@@ -77,6 +70,7 @@ export default function Profile() {
             placeholder="Email"
             value={email}
             mode="outlined"
+            label="Email"
             onChangeText={(text) => setEmail(text)}
           />
           <TextInput
@@ -84,6 +78,14 @@ export default function Profile() {
             placeholder="Password"
             value={password}
             mode="outlined"
+            secureTextEntry={passwordHidden}
+            label="Password"
+            right={
+              <TextInput.Icon
+                icon="eye"
+                onPress={() => setPasswordHidden(!passwordHidden)}
+              />
+            }
             onChangeText={(text) => setPassword(text)}
           />
           <Button mode="contained" icon="login" onPress={() => signIn()}>
@@ -92,11 +94,20 @@ export default function Profile() {
           <Button mode="contained" icon="login" onPress={() => signUp()}>
             Create Account
           </Button>
-          <Button mode="contained" icon="login" onPress={() => signOut()}>
+          <Button
+            mode="contained"
+            buttonColor="darkred"
+            icon="login"
+            onPress={() => signOut()}
+          >
             Sign Out
           </Button>
 
-          {user ? <Text>Logged in with: {user.email}</Text> : <Text>Not logged in</Text>}
+          {user ? (
+            <Text>Logged in with: {user.email}</Text>
+          ) : (
+            <Text>Not logged in</Text>
+          )}
         </KeyboardAvoidingView>
       </View>
     </View>

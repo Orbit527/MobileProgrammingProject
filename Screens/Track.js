@@ -13,9 +13,10 @@ import {
 } from "react-native-paper";
 import RouteMap from "../Components/RouteMap.js";
 import RouteParametersCards from "../Components/RouteParametersCards.js";
-import { database } from "../firebaseConfig.js";
+import { database, firebaseAuth } from "../firebaseConfig.js";
 import { formatTimestampDay } from "../HelperClass.js";
 import { styles } from "../StyleSheet.js";
+import { onAuthStateChanged } from "firebase/auth";
 
 export default function Track() {
   const [isTracking, setIsTracking] = useState(false);
@@ -30,6 +31,14 @@ export default function Track() {
   const [endTime, setEndTime] = useState();
   const [name, setName] = useState("");
   const [visible, setVisible] = React.useState(false);
+
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    onAuthStateChanged(firebaseAuth, (user) => {
+      setUser(user);
+    });
+  }, []);
 
   const startTracking = () => {
     setIsTracking(true);
@@ -77,7 +86,7 @@ export default function Track() {
       endTime: endTime,
     };
 
-    push(ref(database, "/routes/"), obj);
+    push(ref(database, "/users/" + user.uid), obj);
   };
 
   // Timer was done using this tutorial: https://www.youtube.com/watch?v=xgFgZBijW7M
@@ -249,40 +258,61 @@ export default function Track() {
                 <Text variant="titleLarge" style={{ marginBottom: 15 }}>
                   Route finished!
                 </Text>
-                <TextInput
-                  style={{ marginBottom: 15 }}
-                  placeholder="Enter a name for your Route..."
-                  mode="outlined"
-                  maxLength={23}
-                  onChangeText={(text) => setName(text)}
-                ></TextInput>
-                <View
-                  style={{
-                    flexDirection: "row",
-                    justifyContent: "space-between",
-                    marginLeft: 20,
-                    marginRight: 20
-                  }}
-                >
-                  <Button
-                    buttonColor="grey"
-                    mode="contained"
-                    icon="cancel"
-                    onPress={hideDetails}
-                  >
-                    Discard
-                  </Button>
-                  <Button
-                    mode="contained"
-                    icon="content-save"
-                    onPress={() => {
-                      uploadDataToFirebase();
-                      setVisible(false);
-                    }}
-                  >
-                    Save
-                  </Button>
-                </View>
+
+                {user ? (
+                  <View>
+                    <TextInput
+                      style={{ marginBottom: 15 }}
+                      placeholder="Enter a name for your Route..."
+                      mode="outlined"
+                      label="Title"
+                      maxLength={23}
+                      onChangeText={(text) => setName(text)}
+                    ></TextInput>
+                    <View
+                      style={{
+                        flexDirection: "row",
+                        justifyContent: "space-between",
+                        marginLeft: 20,
+                        marginRight: 20,
+                      }}
+                    >
+                      <Button
+                        buttonColor="grey"
+                        mode="contained"
+                        icon="cancel"
+                        onPress={hideDetails}
+                      >
+                        Discard
+                      </Button>
+
+                      <Button
+                        mode="contained"
+                        icon="content-save"
+                        onPress={() => {
+                          uploadDataToFirebase();
+                          setVisible(false);
+                        }}
+                      >
+                        Save
+                      </Button>
+                    </View>
+                  </View>
+                ) : (
+                  <View>
+                    <Text variant="titleMedium" style={{ marginBottom: 15 }}>
+                      You must be signed in to save Route
+                    </Text>
+                    <Button
+                      buttonColor="grey"
+                      mode="contained"
+                      icon="cancel"
+                      onPress={hideDetails}
+                    >
+                      Discard
+                    </Button>
+                  </View>
+                )}
               </View>
             </Modal>
           </Portal>

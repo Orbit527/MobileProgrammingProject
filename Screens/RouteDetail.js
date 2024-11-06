@@ -1,19 +1,28 @@
+import { onAuthStateChanged } from "firebase/auth";
 import { ref, remove } from "firebase/database";
+import { useEffect, useState } from "react";
 import { View } from "react-native";
-import MapView, { Polyline } from "react-native-maps";
-import { Appbar, Button, Divider, Text } from "react-native-paper";
-import RouteParametersCards from "../Components/RouteParametersCards.js";
-import { database } from "../firebaseConfig.js";
-import { styles } from "../StyleSheet.js";
+import { Appbar, Button } from "react-native-paper";
 import RouteMap from "../Components/RouteMap.js";
+import RouteParametersCards from "../Components/RouteParametersCards.js";
+import { database, firebaseAuth } from "../firebaseConfig.js";
+import { styles } from "../StyleSheet.js";
 
 export default function RouteDetail({ navigation, route }) {
   const { data } = route.params;
 
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    onAuthStateChanged(firebaseAuth, (user) => {
+      setUser(user);
+    });
+  }, []);
+
   const deleteEntry = async (key) => {
     console.log("Deleted: " + key);
 
-    remove(ref(database, "routes/" + key));
+    remove(ref(database, "users/" + user.uid + "/" + key));
     navigation.navigate("Route");
   };
 
