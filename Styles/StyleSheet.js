@@ -18,7 +18,6 @@ export const styles = StyleSheet.create({
     height: 65,
     margin: 1,
     borderRadius: 10,
-    backgroundColor: "white",
     justifyContent: "space-around",
   },
   cardContent: {
