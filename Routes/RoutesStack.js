@@ -1,26 +1,11 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import React, { useEffect } from "react";
+import React from "react";
 import RouteDetail from "./RouteDetail";
 import Routes from "./Routes";
-import { useNavigation } from "@react-navigation/native";
 
 const Stack = createNativeStackNavigator();
 
-export default function RouteStack({ navigation, route }) {
-  const stackNavigation = useNavigation();
-
-  // this is for ensuring that when clicking a second time on the Routes Tab, it doesn't go into details
-  useEffect(() => {
-    const unsubscribe = navigation.addListener("focus", () => {
-      stackNavigation.reset({
-        index: 0,
-        routes: [{ name: "Route" }],
-      });
-    });
-
-    return unsubscribe;
-  }, [navigation]);
-
+export default function RouteStack() {
   return (
     <Stack.Navigator
       screenOptions={{
