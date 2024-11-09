@@ -1,7 +1,6 @@
 import {
-  createUserWithEmailAndPassword,
   onAuthStateChanged,
-  signInWithEmailAndPassword,
+  signInWithEmailAndPassword
 } from "firebase/auth";
 import { useEffect, useState } from "react";
 import { KeyboardAvoidingView, View } from "react-native";
@@ -9,10 +8,9 @@ import { Appbar, Button, Text, TextInput } from "react-native-paper";
 import { firebaseAuth } from "../firebaseConfig.js";
 import { styles } from "../Styles/StyleSheet.js";
 
-export default function Profile() {
+export default function Profile({ navigation }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [loading, setLoading] = useState(false);
   const [passwordHidden, setPasswordHidden] = useState(true);
   const auth = firebaseAuth;
 
@@ -24,22 +22,6 @@ export default function Profile() {
     try {
       const response = await signInWithEmailAndPassword(auth, email, password);
       console.log(response);
-    } catch (error) {
-      console.log(error);
-      alert("Sign in failed: " + error.message);
-    }
-  };
-
-  const signUp = async () => {
-    console.log("signUp");
-    try {
-      const response = await createUserWithEmailAndPassword(
-        auth,
-        email,
-        password
-      );
-      console.log(response);
-      alert("Check your email!");
     } catch (error) {
       console.log(error);
       alert("Sign in failed: " + error.message);
@@ -88,25 +70,46 @@ export default function Profile() {
             }
             onChangeText={(text) => setPassword(text)}
           />
-          <Button mode="contained" icon="login" onPress={() => signIn()}>
-            Login
-          </Button>
-          <Button mode="contained" icon="login" onPress={() => signUp()}>
-            Create Account
-          </Button>
-          <Button
-            mode="contained"
-            buttonColor="darkred"
-            icon="login"
-            onPress={() => signOut()}
-          >
-            Sign Out
-          </Button>
-
           {user ? (
-            <Text>Logged in with: {user.email}</Text>
+            <View>
+              <Text variant="titleLarge">Your Profile</Text>
+              <Text variant="titleLarge" style={{ marginBottom: 25 }}>
+                {user.email}
+              </Text>
+
+              <Button
+                mode="contained"
+                buttonColor="darkred"
+                icon="logout"
+                onPress={() => signOut()}
+              >
+                Log Out
+              </Button>
+            </View>
           ) : (
-            <Text>Not logged in</Text>
+            <View>
+              <Button
+                mode="contained"
+                icon="login"
+                onPress={() => signIn()}
+                style={{ marginBottom: 15 }}
+              >
+                Login
+              </Button>
+
+              <Text variant="titleLarge" style={{ marginBottom: 5 }}>
+                Don't have an account?
+              </Text>
+
+              <Button
+                icon="account-plus-outline"
+                onPress={() => {
+                  navigation.navigate("Register");
+                }}
+              >
+                Register
+              </Button>
+            </View>
           )}
         </KeyboardAvoidingView>
       </View>

@@ -6,7 +6,7 @@ import { useNavigation } from "@react-navigation/native";
 
 const Stack = createNativeStackNavigator();
 
-export default function HomeStack({ navigation, route }) {
+export default function RouteStack({ navigation, route }) {
   const stackNavigation = useNavigation();
 
   // this is for ensuring that when clicking a second time on the Routes Tab, it doesn't go into details

@@ -5,15 +5,14 @@ import { StatusBar } from "expo-status-bar";
 import { BottomNavigation, PaperProvider } from "react-native-paper";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import Home from "./Routes/Home";
-import Profile from "./Routes/Profile";
 import Settings from "./Routes/Settings";
 import Track from "./Routes/Track";
 
 import { CommonActions } from "@react-navigation/native";
+import ProfileStack from "./Routes/ProfileStack";
 import RoutesStack from "./Routes/RoutesStack";
 
 const Tab = createBottomTabNavigator();
-const Stack = createNativeStackNavigator();
 
 // Nagivation was mostly taken from: https://callstack.github.io/react-native-paper/docs/components/BottomNavigation/BottomNavigationBar
 
@@ -98,8 +97,8 @@ export default function App() {
             }}
           />
           <Tab.Screen
-            name="Profile"
-            component={Profile}
+            name="ProfileStack"
+            component={ProfileStack}
             options={{
               tabBarLabel: "Profile",
               tabBarIcon: ({ color, size }) => {
