@@ -1,6 +1,7 @@
 import { View } from "react-native";
 import { Appbar, Text } from "react-native-paper";
 import { styles } from "../Styles/StyleSheet.js";
+import WeatherCards from "../Components/WeatherCards.js";
 
 export default function Home() {
   return (
@@ -11,6 +12,7 @@ export default function Home() {
 
       <View style={styles.container}>
         <Text variant="titleLarge">Home</Text>
+        <WeatherCards lat={"60.1695"} long={"24.9354"}/>
       </View>
     </View>
   );
