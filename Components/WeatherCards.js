@@ -36,8 +36,11 @@ export default function WeatherCards({ lat, long }) {
 
   return (
     <View style={styles.cardFlexBox}>
-      <Card mode="elevated" style={styles.weatherCardHolder}>
-        <Text variant="titleLarge" style={{ marginTop: 10, marginBottom: 10 }}>
+      <Card mode="elevated" style={styles.cardHolder}>
+        <Text
+          variant="titleLarge"
+          style={{ marginLeft: 5, marginTop: 10, marginBottom: 5 }}
+        >
           Now
         </Text>
         <View style={styles.cardFlexBoxRow}>
@@ -59,7 +62,10 @@ export default function WeatherCards({ lat, long }) {
             </Card.Content>
           </Card>
         </View>
-        <Text variant="titleLarge" style={{ marginTop: 10, marginBottom: 10 }}>
+        <Text
+          variant="titleLarge"
+          style={{ marginLeft: 5, marginTop: 10, marginBottom: 5 }}
+        >
           Future
         </Text>
         <View style={styles.cardFlexBoxRow}>
@@ -80,10 +86,10 @@ export default function WeatherCards({ lat, long }) {
             <Card.Content style={styles.weatherCardContentTall}>
               <Text variant="titleMedium">+2 h</Text>
               <Divider style={{ height: 1, width: "160%" }} />
-              <Text variant="titleMedium">
+              <Text variant="titleSmall">
                 {response && response.hourly.temperature_2m[1]} °C
               </Text>
-              <Text variant="titleMedium">
+              <Text variant="titleSmall">
                 {response && response.hourly.precipitation_probability[1]} %
               </Text>
             </Card.Content>
@@ -93,7 +99,7 @@ export default function WeatherCards({ lat, long }) {
             <Card.Content style={styles.weatherCardContentTall}>
               <Text variant="titleMedium">+1 d</Text>
               <Divider style={{ height: 1, width: "160%" }} />
-              <Text variant="titleMedium">
+              <Text variant="titleSmall">
                 {
                   //round to 1 decimal place
                   response &&
@@ -106,7 +112,7 @@ export default function WeatherCards({ lat, long }) {
                 }{" "}
                 °C
               </Text>
-              <Text variant="titleMedium">
+              <Text variant="titleSmall">
                 {response && response.daily.precipitation_probability_mean[0]} %
               </Text>
             </Card.Content>
@@ -116,7 +122,7 @@ export default function WeatherCards({ lat, long }) {
             <Card.Content style={styles.weatherCardContentTall}>
               <Text variant="titleMedium">+2 d</Text>
               <Divider style={{ height: 1, width: "160%" }} />
-              <Text variant="titleMedium">
+              <Text variant="titleSmall">
                 {
                   //round to 1 decimal place
                   response &&
@@ -129,7 +135,7 @@ export default function WeatherCards({ lat, long }) {
                 }{" "}
                 °C
               </Text>
-              <Text variant="titleMedium">
+              <Text variant="titleSmall">
                 {response && response.daily.precipitation_probability_mean[1]} %
               </Text>
             </Card.Content>

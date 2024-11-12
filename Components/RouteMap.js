@@ -10,7 +10,7 @@ export default function RouteMap({
 }) {
   return (
     <MapView
-      style={{ width: "100%", height: "50%", marginBottom: 10 }}
+      style={{ width: "100%", height: "50%" }}
       initialRegion={{
         latitude: 0,
         longitude: 0,

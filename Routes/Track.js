@@ -5,6 +5,8 @@ import { Alert, View } from "react-native";
 import {
   Appbar,
   Button,
+  Card,
+  Divider,
   Modal,
   PaperProvider,
   Portal,
@@ -12,11 +14,12 @@ import {
   TextInput,
 } from "react-native-paper";
 import RouteMap from "../Components/RouteMap.js";
-import RouteParametersCards from "../Components/RouteParametersCards.js";
+import TrackParametersCards from "../Components/TrackParametersCards.js";
 import { database, firebaseAuth } from "../firebaseConfig.js";
 import { formatTimestampDay } from "../Helper/HelperClass.js";
 import { styles } from "../Styles/StyleSheet.js";
 import { onAuthStateChanged } from "firebase/auth";
+import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 
 export default function Track() {
   const [isTracking, setIsTracking] = useState(false);
@@ -203,43 +206,60 @@ export default function Track() {
         <Appbar.Content title="Track" titleStyle={{ fontSize: 24 }} />
       </Appbar.Header>
 
-      <View style={styles.container}>
-        <PaperProvider>
-          <RouteMap
-            locationLat={location ? location.coords.latitude : 0}
-            locationLong={location ? location.coords.longitude : 0}
-            coordinates={coordinates}
-            tracking={true}
-          />
+      <PaperProvider>
+        <RouteMap
+          locationLat={location ? location.coords.latitude : 0}
+          locationLong={location ? location.coords.longitude : 0}
+          coordinates={coordinates}
+          tracking={true}
+        />
 
-          <RouteParametersCards
-            duration={duration}
-            distance={distance}
-            pace={pace}
-            startTime={startTime}
-            endTime={endTime}
-          />
+        <View style={styles.container}>
+          <View style={styles.cardFlexBox}>
+            <Card mode="elevated" style={styles.cardHolder}>
+              <TrackParametersCards
+                duration={duration}
+                distance={distance}
+                pace={pace}
+                startTime={startTime}
+                endTime={endTime}
+              />
 
-          <View style={{ alignItems: "center" }}>
-            {!isTracking ? (
-              <Button
-                style={styles.button}
-                mode="contained"
-                icon="shoe-sneaker"
-                onPress={() => startTracking()}
-              >
-                Start tracking
-              </Button>
-            ) : (
-              <Button
-                style={styles.button}
-                mode="contained"
-                icon="stop-circle"
-                onPress={() => endTracking()}
-              >
-                End tracking
-              </Button>
-            )}
+              <Divider style={{marginTop: 8, height: 1, width: "100%"}}></Divider>
+
+              <View style={{ marginVertical: 8, alignItems: "center" }}>
+                {!isTracking ? (
+                  <Button
+                    style={styles.button}
+                    mode="contained"
+                    contentStyle={{ flexDirection: "row-reverse" }}
+                    icon={({ size, color }) => (
+                      <Icon name="arrow-right-thick" size={24} color="#fff" />
+                    )}
+                    onPress={() => startTracking()}
+                  >
+                    <Text variant="titleMedium" style={{ color: "white" }}>
+                      Start tracking
+                    </Text>
+                  </Button>
+                ) : (
+                  <Button
+                    style={styles.button}
+                    mode="contained"
+                    contentStyle={{ flexDirection: "row-reverse" }}
+                    icon={({ size, color }) => (
+                      <Icon name="stop-circle-outline" size={24} color="#fff" />
+                    )}
+                    buttonColor="darkred"
+                    onPress={() => endTracking()}
+                  >
+                    <Text variant="titleMedium" style={{ color: "white" }}>
+                      End tracking
+                    </Text>
+                  </Button>
+                )}
+              </View>
+            </Card>
           </View>
 
           <Portal>
@@ -316,8 +336,8 @@ export default function Track() {
               </View>
             </Modal>
           </Portal>
-        </PaperProvider>
-      </View>
+        </View>
+      </PaperProvider>
     </View>
   );
 }

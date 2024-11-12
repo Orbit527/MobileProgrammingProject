@@ -3,17 +3,18 @@ import { onValue, ref } from "firebase/database";
 import React, { useEffect, useState } from "react";
 import { FlatList, View } from "react-native";
 import {
-	ActivityIndicator,
-	Button,
-	Card,
-	Text
+  ActivityIndicator,
+  Button,
+  Card,
+  Divider,
+  Text,
 } from "react-native-paper";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import { database, firebaseAuth } from "../firebaseConfig.js";
 import { distanceToKm, formatDuration } from "../Helper/HelperClass.js";
 import { styles } from "../Styles/StyleSheet.js";
 
-export default function RoutesList({navigation}) {
+export default function RoutesList({ navigation }) {
   const [routes, setRoutes] = useState([]);
   const [loading, setLoading] = useState(false);
   const [overallDistance, setOverallDistance] = useState(0);
@@ -67,9 +68,9 @@ export default function RoutesList({navigation}) {
         setOverallDuration(totalDuration);
       });
     } else {
-			setOverallDistance(0);
-			setOverallDuration(0);
-		}
+      setOverallDistance(0);
+      setOverallDuration(0);
+    }
   }, [user]);
 
   const showDetails = (key) => {
@@ -79,31 +80,32 @@ export default function RoutesList({navigation}) {
 
   return (
     <View style={{ flex: 1 }}>
-
       <Text variant="titleLarge" style={{ marginLeft: 20, marginTop: 20 }}>
         Overall Statistics
       </Text>
 
       <View style={styles.container}>
-        <View style={styles.cardFlexBoxRow}>
-          <Card mode="elevated" style={styles.card}>
-            <Card.Content style={styles.cardContent}>
-              <Icon name="map-marker-distance" size={24} color="#000" />
-              <Text variant="titleMedium">
-                {distanceToKm(overallDistance)} km
-              </Text>
-            </Card.Content>
-          </Card>
+        <Card mode="elevated" style={styles.cardHolder}>
+          <View style={styles.cardFlexBoxRow}>
+            <Card mode="contained" style={styles.card}>
+              <Card.Content style={styles.cardContent}>
+                <Icon name="map-marker-distance" size={24} color="#000" />
+                <Text variant="titleMedium">
+                  {distanceToKm(overallDistance)} km
+                </Text>
+              </Card.Content>
+            </Card>
 
-          <Card mode="elevated" style={styles.card}>
-            <Card.Content style={styles.cardContent}>
-              <Icon name="clock-outline" size={24} color="#000" />
-              <Text variant="titleMedium">
-                {formatDuration(overallDuration)} h
-              </Text>
-            </Card.Content>
-          </Card>
-        </View>
+            <Card mode="contained" style={styles.card}>
+              <Card.Content style={styles.cardContent}>
+                <Icon name="clock-outline" size={24} color="#000" />
+                <Text variant="titleMedium">
+                  {formatDuration(overallDuration)} h
+                </Text>
+              </Card.Content>
+            </Card>
+          </View>
+        </Card>
 
         <Text variant="titleLarge" style={{ marginTop: 10, marginBottom: 10 }}>
           Your Routes
@@ -125,7 +127,10 @@ export default function RoutesList({navigation}) {
                     margin: 4,
                   }}
                 >
-                  <Card mode="elevated" style={styles.cardLong}>
+                  <Card mode="contained" style={styles.cardLong}>
+                    <Divider
+                      style={{ height: 1, width: "100%", marginBottom: 8 }}
+                    />
                     <Card.Content style={styles.cardContent}>
                       <Text variant="titleMedium">{item.title}</Text>
                     </Card.Content>

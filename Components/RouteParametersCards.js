@@ -19,53 +19,57 @@ export default function RouteParametersCards({
 }) {
   return (
     <View style={styles.cardFlexBox}>
-      <View style={styles.cardFlexBoxRow}>
-        <Card mode="elevated" style={styles.card}>
-          <Card.Content style={styles.cardContent}>
-            <Icon name="clock-outline" size={24} color="#000" />
-            <Text variant="titleMedium">{formatDuration(duration)} h</Text>
-          </Card.Content>
-        </Card>
+      <Card mode="elevated" style={styles.cardHolder}>
+        <View style={styles.cardFlexBoxRow}>
+          <Card mode="contained" style={styles.card}>
+            <Card.Content style={styles.cardContent}>
+              <Icon name="clock-outline" size={30} color="#000" />
+              <Text variant="titleMedium">{formatDuration(duration)} h</Text>
+            </Card.Content>
+          </Card>
 
-        <Card mode="elevated" style={styles.card}>
-          <Card.Content style={styles.cardContent}>
-            <Icon name="map-marker-distance" size={24} color="#000" />
-            <Text variant="titleMedium">{distanceToKm(distance)} km</Text>
-          </Card.Content>
-        </Card>
-      </View>
+          <Card mode="contained" style={styles.card}>
+            <Card.Content style={styles.cardContent}>
+              <Icon name="map-marker-distance" size={30} color="#000" />
+              <Text variant="titleMedium">{distanceToKm(distance)} km</Text>
+            </Card.Content>
+          </Card>
+        </View>
 
-      <View style={styles.cardFlexBoxRow}>
-        <Card mode="elevated" style={styles.card}>
-          <Card.Content style={styles.cardContent}>
-            <Icon name="speedometer" size={24} color="#000" />
-            <Text variant="titleMedium">{formatPace(pace)} min/km</Text>
-          </Card.Content>
-        </Card>
+        <View style={styles.cardFlexBoxRow}>
+          <Card mode="contained" style={styles.card}>
+            <Card.Content style={styles.cardContent}>
+              <Icon name="speedometer" size={30} color="#000" />
+              <Text variant="titleMedium">{formatPace(pace)} min/km</Text>
+            </Card.Content>
+          </Card>
 
-        <Card mode="elevated" style={styles.card}>
-          <Card.Content style={styles.cardContent}>
-            <Icon name="calendar" size={24} color="#000" />
-            <Text variant="titleMedium">{formatTimestampDay(startTime)}</Text>
-          </Card.Content>
-        </Card>
-      </View>
+          <Card mode="contained" style={styles.card}>
+            <Card.Content style={styles.cardContent}>
+              <Icon name="calendar" size={24} color="#000" />
+              <Text variant="titleMedium">{formatTimestampDay(startTime)}</Text>
+            </Card.Content>
+          </Card>
+        </View>
 
-      <View style={styles.cardFlexBoxRow}>
-        <Card mode="elevated" style={styles.card}>
-          <Card.Content style={styles.cardContent}>
-            <Icon name="clock-start" size={24} color="#000" />
-            <Text variant="titleMedium">{formatTimestampHours(startTime)}</Text>
-          </Card.Content>
-        </Card>
+        <View style={styles.cardFlexBoxRow}>
+          <Card mode="contained" style={styles.card}>
+            <Card.Content style={styles.cardContent}>
+              <Icon name="clock-start" size={24} color="#000" />
+              <Text variant="titleMedium">
+                {formatTimestampHours(startTime)}
+              </Text>
+            </Card.Content>
+          </Card>
 
-        <Card mode="elevated" style={styles.card}>
-          <Card.Content style={styles.cardContent}>
-            <Icon name="clock-end" size={24} color="#000" />
-            <Text variant="titleMedium">{formatTimestampHours(endTime)}</Text>
-          </Card.Content>
-        </Card>
-      </View>
+          <Card mode="contained" style={styles.card}>
+            <Card.Content style={styles.cardContent}>
+              <Icon name="clock-end" size={24} color="#000" />
+              <Text variant="titleMedium">{formatTimestampHours(endTime)}</Text>
+            </Card.Content>
+          </Card>
+        </View>
+      </Card>
     </View>
   );
 }
