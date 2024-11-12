@@ -29,7 +29,9 @@ export default function Home({ navigation }) {
               Current Weather Conditions
             </Text>
             <WeatherCards lat={"60.1695"} long={"24.9354"} />
-          </View>
+            </View>
+            <RoutesList navigation={navigation}/>
+
         </ScrollView>
       </View>
     </View>

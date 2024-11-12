@@ -107,7 +107,7 @@ export default function RoutesList({ navigation }) {
           </View>
         </Card>
 
-        <Text variant="titleLarge" style={{ marginTop: 10, marginBottom: 10 }}>
+        <Text variant="titleLarge" style={{ marginLeft: 17, marginVertical: 15 }}>
           Your Routes
         </Text>
 
