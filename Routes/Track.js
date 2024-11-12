@@ -225,8 +225,6 @@ export default function Track() {
                 endTime={endTime}
               />
 
-              <Divider style={{marginTop: 8, height: 1, width: "100%"}}></Divider>
-
               <View style={{ marginVertical: 8, alignItems: "center" }}>
                 {!isTracking ? (
                   <Button

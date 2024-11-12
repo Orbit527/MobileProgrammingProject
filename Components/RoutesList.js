@@ -48,7 +48,7 @@ export default function RoutesList({ navigation }) {
           ...other,
         }));
 
-        setRoutes(dataWithKey);
+        setRoutes(dataWithKey.reverse());
         setLoading(true);
 
         let totalDistance = Object.values(dataWithKey).reduce(
@@ -89,7 +89,7 @@ export default function RoutesList({ navigation }) {
           <View style={styles.cardFlexBoxRow}>
             <Card mode="contained" style={styles.card}>
               <Card.Content style={styles.cardContent}>
-                <Icon name="map-marker-distance" size={24} color="#000" />
+                <Icon name="arrow-expand-horizontal" size={24} color="#000" />
                 <Text variant="titleLarge">
                   {distanceToKm(overallDistance)} km
                 </Text>
@@ -136,7 +136,7 @@ export default function RoutesList({ navigation }) {
                     </Card.Content>
 
                     <Card.Content style={styles.cardContent}>
-                      <Icon name="map-marker-distance" size={24} color="#000" />
+                      <Icon name="arrow-expand-horizontal" size={24} color="#000" />
                       <Text>{distanceToKm(item.distance)} km</Text>
                       <Icon name="clock-outline" size={24} color="#000" />
                       <Text>{formatDuration(item.duration)} h</Text>
