@@ -1,9 +1,14 @@
 import { StyleSheet } from "react-native";
 
 export const styles = StyleSheet.create({
+
   container: {
     flex: 1,
     margin: 10,
+  },
+  upperContainer: {
+    flex: 1,
+    backgroundColor: "white",
   },
   cardFlexBox: {
     flex: 1,
@@ -14,10 +19,9 @@ export const styles = StyleSheet.create({
   },
   card: {
     flex: 1,
-    height: 65,
     margin: 2,
     borderRadius: 5,
-    backgroundColor: "rgba(255, 255, 255, 0.4)",
+    backgroundColor: "transparent",
     justifyContent: "space-around",
   },
   cardContent: {
@@ -39,23 +43,21 @@ export const styles = StyleSheet.create({
     justifyContent: "space-around",
   },
   cardHolder: {
-    backgroundColor: "#E4EBFD",
+    backgroundColor: "#d9eeff",
     padding: 5,
   },
   weatherCard: {
     flex: 1,
-    height: 65,
     margin: 2,
     borderRadius: 5,
-    backgroundColor: "rgba(255, 255, 255, 0.4)",
+    backgroundColor: "transparent",
     justifyContent: "space-around",
   },
   weatherCardTall: {
     flex: 1,
-    height: 90,
     margin: 2,
     borderRadius: 5,
-    backgroundColor: "rgba(255, 255, 255, 0.4)",
+    backgroundColor: "transparent",
     justifyContent: "space-around",
   },
   weatherCardContentTall: {

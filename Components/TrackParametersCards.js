@@ -21,15 +21,21 @@ export default function RouteParametersCards({
     <View>
       <View style={styles.cardFlexBoxRow}>
         <Card mode="contained" style={styles.card}>
+          <Card.Content>
+            <Text variant="titleSmall">Time</Text>
+          </Card.Content>
           <Card.Content style={styles.cardContent}>
-            <Icon name="clock-outline" size={30} color="#000" />
+            <Icon name="clock-outline" size={28} color="#000" />
             <Text variant="titleLarge">{formatDuration(duration)} h</Text>
           </Card.Content>
         </Card>
 
         <Card mode="contained" style={styles.card}>
+          <Card.Content>
+            <Text variant="titleSmall">Distance</Text>
+          </Card.Content>
           <Card.Content style={styles.cardContent}>
-            <Icon name="map-marker-distance" size={30} color="#000" />
+            <Icon name="arrow-expand-horizontal" size={28} color="#000" />
             <Text variant="titleLarge">{distanceToKm(distance)} km</Text>
           </Card.Content>
         </Card>
@@ -37,25 +43,22 @@ export default function RouteParametersCards({
 
       <View style={styles.cardFlexBoxRow}>
         <Card mode="contained" style={styles.card}>
+          <Card.Content>
+            <Text variant="titleSmall">Pace</Text>
+          </Card.Content>
           <Card.Content style={styles.cardContent}>
-            <Icon name="speedometer" size={30} color="#000" />
+            <Icon name="speedometer" size={28} color="#000" />
             <Text variant="titleLarge">{formatPace(pace)} min/km</Text>
           </Card.Content>
         </Card>
-      </View>
 
-      <View style={styles.cardFlexBoxRow}>
         <Card mode="contained" style={styles.card}>
-          <Card.Content style={styles.cardContent}>
-            <Icon name="clock-start" size={24} color="#000" />
-            <Text variant="titleMedium">{formatTimestampHours(startTime)}</Text>
+          <Card.Content>
+            <Text variant="titleSmall">Start Time</Text>
           </Card.Content>
-        </Card>
-
-        <Card mode="contained" style={styles.card}>
           <Card.Content style={styles.cardContent}>
-            <Icon name="clock-end" size={24} color="#000" />
-            <Text variant="titleMedium">{formatTimestampHours(endTime)}</Text>
+            <Icon name="clock-start" size={28} color="#000" />
+            <Text variant="titleLarge">{formatTimestampHours(startTime)}</Text>
           </Card.Content>
         </Card>
       </View>

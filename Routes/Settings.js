@@ -4,7 +4,7 @@ import { styles } from "../Styles/StyleSheet.js"
 
 export default function Settings() {
   return (
-    <View style={{ flex: 1 }}>
+    <View style={styles.upperContainer}>
       <Appbar.Header elevated mode="small">
         <Appbar.Content title="Settings" titleStyle={{ fontSize: 24 }} />
       </Appbar.Header>

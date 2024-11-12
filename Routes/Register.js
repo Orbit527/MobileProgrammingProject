@@ -29,7 +29,7 @@ export default function Register({ navigation }) {
   };
 
   return (
-    <View style={{ flex: 1 }}>
+    <View style={styles.upperContainer}>
       <Appbar.Header elevated mode="small">
         <Appbar.BackAction onPress={() => navigation.navigate("Profile")} />
         <Appbar.Content title="Register" titleStyle={{ fontSize: 24 }} />

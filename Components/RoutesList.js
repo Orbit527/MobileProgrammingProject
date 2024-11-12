@@ -80,17 +80,17 @@ export default function RoutesList({ navigation }) {
 
   return (
     <View style={{ flex: 1 }}>
-      <Text variant="titleLarge" style={{ marginLeft: 20, marginTop: 20 }}>
-        Overall Statistics
-      </Text>
-
       <View style={styles.container}>
         <Card mode="elevated" style={styles.cardHolder}>
+          <Text variant="titleLarge" style={{ marginLeft: 17, marginTop: 15 }}>
+            Overall Statistics
+          </Text>
+
           <View style={styles.cardFlexBoxRow}>
             <Card mode="contained" style={styles.card}>
               <Card.Content style={styles.cardContent}>
                 <Icon name="map-marker-distance" size={24} color="#000" />
-                <Text variant="titleMedium">
+                <Text variant="titleLarge">
                   {distanceToKm(overallDistance)} km
                 </Text>
               </Card.Content>
@@ -99,7 +99,7 @@ export default function RoutesList({ navigation }) {
             <Card mode="contained" style={styles.card}>
               <Card.Content style={styles.cardContent}>
                 <Icon name="clock-outline" size={24} color="#000" />
-                <Text variant="titleMedium">
+                <Text variant="titleLarge">
                   {formatDuration(overallDuration)} h
                 </Text>
               </Card.Content>

@@ -6,7 +6,7 @@ import RoutesList from "../Components/RoutesList.js";
 
 export default function Home({ navigation }) {
   return (
-    <View style={{ flex: 1 }}>
+    <View style={styles.upperContainer}>
       <Appbar.Header elevated mode="small">
         <Appbar.Content title="Home" titleStyle={{ fontSize: 24 }} />
       </Appbar.Header>

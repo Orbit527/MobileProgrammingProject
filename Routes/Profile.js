@@ -40,7 +40,7 @@ export default function Profile({ navigation }) {
   }, []);
 
   return (
-    <View style={{ flex: 1 }}>
+    <View style={styles.upperContainer}>
       <Appbar.Header elevated mode="small">
         <Appbar.Content title="Profile" titleStyle={{ fontSize: 24 }} />
       </Appbar.Header>

@@ -27,7 +27,7 @@ export default function RouteDetail({ navigation, route }) {
   };
 
   return (
-    <View style={{ flex: 1 }}>
+    <View style={styles.upperContainer}>
       <Appbar.Header elevated mode="small">
         <Appbar.BackAction onPress={() => navigation.navigate("Route")} />
         <Appbar.Content title={data.title} titleStyle={{ fontSize: 24 }} />
