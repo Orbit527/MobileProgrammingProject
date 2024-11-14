@@ -1,7 +1,6 @@
 import { StyleSheet } from "react-native";
 
 export const styles = StyleSheet.create({
-
   container: {
     flex: 1,
     margin: 10,
@@ -19,8 +18,6 @@ export const styles = StyleSheet.create({
   },
   card: {
     flex: 1,
-    margin: 2,
-    borderRadius: 5,
     backgroundColor: "transparent",
     justifyContent: "space-around",
   },
@@ -46,21 +43,7 @@ export const styles = StyleSheet.create({
     backgroundColor: "#d9eeff",
     padding: 5,
   },
-  weatherCard: {
-    flex: 1,
-    margin: 2,
-    borderRadius: 5,
-    backgroundColor: "transparent",
-    justifyContent: "space-around",
-  },
-  weatherCardTall: {
-    flex: 1,
-    margin: 2,
-    borderRadius: 5,
-    backgroundColor: "transparent",
-    justifyContent: "space-around",
-  },
-  weatherCardContentTall: {
+  cardContentTall: {
     flexDirection: "column",
     alignItems: "center",
     justifyContent: "space-between",

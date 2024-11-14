@@ -1,8 +1,7 @@
 import { ImageBackground, ScrollView, View } from "react-native";
 import { Appbar, Text } from "react-native-paper";
-import { styles } from "../Styles/StyleSheet.js";
 import WeatherCards from "../Components/WeatherCards.js";
-import RoutesList from "../Components/RoutesList.js";
+import { styles } from "../Styles/StyleSheet.js";
 
 export default function Home({ navigation }) {
   return (
@@ -29,9 +28,7 @@ export default function Home({ navigation }) {
               Current Weather Conditions
             </Text>
             <WeatherCards lat={"60.1695"} long={"24.9354"} />
-            </View>
-            <RoutesList navigation={navigation}/>
-
+          </View>
         </ScrollView>
       </View>
     </View>

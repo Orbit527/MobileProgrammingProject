@@ -44,7 +44,7 @@ export default function WeatherCards({ lat, long }) {
           Now
         </Text>
         <View style={styles.cardFlexBoxRow}>
-          <Card mode="contained" style={styles.weatherCard}>
+          <Card mode="contained" style={styles.card}>
             <Card.Content style={styles.cardContent}>
               <Icon name="thermometer" size={30} color="#000" />
               <Text variant="titleLarge">
@@ -53,7 +53,7 @@ export default function WeatherCards({ lat, long }) {
             </Card.Content>
           </Card>
 
-          <Card mode="contained" style={styles.weatherCard}>
+          <Card mode="contained" style={styles.card}>
             <Card.Content style={styles.cardContent}>
               <Icon name="weather-pouring" size={30} color="#000" />
               <Text variant="titleLarge">
@@ -69,8 +69,8 @@ export default function WeatherCards({ lat, long }) {
           Future
         </Text>
         <View style={styles.cardFlexBoxRow}>
-          <Card mode="contained" style={styles.weatherCardTall}>
-            <Card.Content style={styles.weatherCardContentTall}>
+          <Card mode="contained" style={styles.card}>
+            <Card.Content style={styles.cardContentTall}>
               <Text variant="titleMedium">+1 h</Text>
               <Divider style={{ height: 1, width: "160%" }} />
               <Text variant="titleSmall">
@@ -82,8 +82,8 @@ export default function WeatherCards({ lat, long }) {
             </Card.Content>
           </Card>
 
-          <Card mode="contained" style={styles.weatherCardTall}>
-            <Card.Content style={styles.weatherCardContentTall}>
+          <Card mode="contained" style={styles.card}>
+            <Card.Content style={styles.cardContentTall}>
               <Text variant="titleMedium">+2 h</Text>
               <Divider style={{ height: 1, width: "160%" }} />
               <Text variant="titleSmall">
@@ -95,8 +95,8 @@ export default function WeatherCards({ lat, long }) {
             </Card.Content>
           </Card>
 
-          <Card mode="contained" style={styles.weatherCardTall}>
-            <Card.Content style={styles.weatherCardContentTall}>
+          <Card mode="contained" style={styles.card}>
+            <Card.Content style={styles.cardContentTall}>
               <Text variant="titleMedium">+1 d</Text>
               <Divider style={{ height: 1, width: "160%" }} />
               <Text variant="titleSmall">
@@ -118,10 +118,10 @@ export default function WeatherCards({ lat, long }) {
             </Card.Content>
           </Card>
 
-          <Card mode="contained" style={styles.weatherCardTall}>
-            <Card.Content style={styles.weatherCardContentTall}>
+          <Card mode="contained" style={styles.card}>
+            <Card.Content style={styles.cardContentTall}>
               <Text variant="titleMedium">+2 d</Text>
-              <Divider style={{ height: 1, width: "160%" }} />
+              <Divider style={{ height: 1, width: "150%" }} />
               <Text variant="titleSmall">
                 {
                   //round to 1 decimal place

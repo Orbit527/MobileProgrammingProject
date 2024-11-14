@@ -13,12 +13,14 @@ import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import { database, firebaseAuth } from "../firebaseConfig.js";
 import { distanceToKm, formatDuration } from "../Helper/HelperClass.js";
 import { styles } from "../Styles/StyleSheet.js";
+import RoutesGeneralStatistics from "./RoutesGeneralStatistics.js";
 
 export default function RoutesList({ navigation }) {
   const [routes, setRoutes] = useState([]);
   const [loading, setLoading] = useState(false);
   const [overallDistance, setOverallDistance] = useState(0);
   const [overallDuration, setOverallDuration] = useState(0);
+  const [overallPace, setOverallPace] = useState(0);
 
   const [user, setUser] = useState(null);
 
@@ -40,6 +42,7 @@ export default function RoutesList({ navigation }) {
           setRoutes([]);
           setOverallDistance(0);
           setOverallDuration(0);
+          setOverallPace(0);
           return;
         }
 
@@ -66,6 +69,11 @@ export default function RoutesList({ navigation }) {
           0
         );
         setOverallDuration(totalDuration);
+
+        let totalPace = Object.values(dataWithKey).reduce((acc, { pace }) => {
+          return acc + parseFloat(pace);
+        }, 0);
+        setOverallPace(totalPace / routes.length);
       });
     } else {
       setOverallDistance(0);
@@ -81,33 +89,17 @@ export default function RoutesList({ navigation }) {
   return (
     <View style={{ flex: 1 }}>
       <View style={styles.container}>
-        <Card mode="elevated" style={styles.cardHolder}>
-          <Text variant="titleLarge" style={{ marginLeft: 17, marginTop: 15 }}>
-            Overall Statistics
-          </Text>
+        <RoutesGeneralStatistics
+          amount={routes.length}
+          averagePace={overallPace}
+          overallDistance={overallDistance}
+          overallDuration={overallDuration}
+        />
 
-          <View style={styles.cardFlexBoxRow}>
-            <Card mode="contained" style={styles.card}>
-              <Card.Content style={styles.cardContent}>
-                <Icon name="arrow-expand-horizontal" size={24} color="#000" />
-                <Text variant="titleLarge">
-                  {distanceToKm(overallDistance)} km
-                </Text>
-              </Card.Content>
-            </Card>
-
-            <Card mode="contained" style={styles.card}>
-              <Card.Content style={styles.cardContent}>
-                <Icon name="clock-outline" size={24} color="#000" />
-                <Text variant="titleLarge">
-                  {formatDuration(overallDuration)} h
-                </Text>
-              </Card.Content>
-            </Card>
-          </View>
-        </Card>
-
-        <Text variant="titleLarge" style={{ marginLeft: 17, marginVertical: 15 }}>
+        <Text
+          variant="titleLarge"
+          style={{ marginLeft: 17, marginVertical: 15 }}
+        >
           Your Routes
         </Text>
 
@@ -136,7 +128,11 @@ export default function RoutesList({ navigation }) {
                     </Card.Content>
 
                     <Card.Content style={styles.cardContent}>
-                      <Icon name="arrow-expand-horizontal" size={24} color="#000" />
+                      <Icon
+                        name="arrow-expand-horizontal"
+                        size={24}
+                        color="#000"
+                      />
                       <Text>{distanceToKm(item.distance)} km</Text>
                       <Icon name="clock-outline" size={24} color="#000" />
                       <Text>{formatDuration(item.duration)} h</Text>
