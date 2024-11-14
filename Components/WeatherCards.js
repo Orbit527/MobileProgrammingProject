@@ -28,7 +28,7 @@ export default function WeatherCards({ lat, long }) {
 
   useEffect(() => {
     handleFetch();
-  }, []);
+  }, [lat, long]);
 
   useEffect(() => {
     console.log(response);

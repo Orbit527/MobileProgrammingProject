@@ -2,8 +2,25 @@ import { ImageBackground, ScrollView, View } from "react-native";
 import { Appbar, Text } from "react-native-paper";
 import WeatherCards from "../Components/WeatherCards.js";
 import { styles } from "../Styles/StyleSheet.js";
+import { useEffect, useState } from "react";
+import * as Location from "expo-location";
 
 export default function Home({ navigation }) {
+  const [location, setLocation] = useState(null);
+
+  useEffect(() => {
+    (async () => {
+      let { status } = await Location.requestForegroundPermissionsAsync();
+      if (status !== "granted") {
+        setErrorMsg("Permission to access location was denied!");
+        return;
+      }
+
+      let location = await Location.getCurrentPositionAsync({ accuracy: 6 });
+      setLocation(location);
+    })();
+  }, []);
+
   return (
     <View style={styles.upperContainer}>
       <Appbar.Header elevated mode="small">
@@ -27,7 +44,7 @@ export default function Home({ navigation }) {
             <Text variant="headlineMedium" style={{ marginVertical: 20 }}>
               Current Weather Conditions
             </Text>
-            <WeatherCards lat={"60.1695"} long={"24.9354"} />
+            <WeatherCards lat={location ? location.coords.latitude : 0} long={location ? location.coords.longitude : 0} />
           </View>
         </ScrollView>
       </View>
