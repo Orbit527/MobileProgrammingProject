@@ -1,6 +1,6 @@
 import React from "react";
 import { View } from "react-native";
-import { Card, Text } from "react-native-paper";
+import { Card, Divider, Text } from "react-native-paper";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import {
   distanceToKm,
@@ -17,9 +17,10 @@ export default function RoutesGeneralStatistics({
 }) {
   return (
     <Card mode="elevated" style={styles.cardHolder}>
-      <Text variant="titleLarge" style={{ marginLeft: 17, marginTop: 15 }}>
+      <Text variant="titleLarge" style={{ marginLeft: 17, marginTop: 15, marginBottom: 5 }}>
         Overall Statistics
       </Text>
+      <Divider style={{ height: 1 }} />
 
       <View style={styles.cardFlexBoxRow}>
         <Card mode="contained" style={styles.card}>

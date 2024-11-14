@@ -39,12 +39,19 @@ export default function WeatherCards({ lat, long }) {
       <Card mode="elevated" style={styles.cardHolder}>
         <Text
           variant="titleLarge"
-          style={{ marginLeft: 5, marginTop: 10, marginBottom: 5 }}
+          style={{ marginLeft: 17, marginTop: 15, marginBottom: 5 }}
         >
-          Now
+          Weather Conditions
+        </Text>
+        <Divider style={{ height: 1 }} />
+        <Text variant="titleMedium" style={{ marginLeft: 17, marginTop: 10 }}>
+          Current
         </Text>
         <View style={styles.cardFlexBoxRow}>
           <Card mode="contained" style={styles.card}>
+            <Card.Content>
+              <Text variant="titleSmall">Temperature</Text>
+            </Card.Content>
             <Card.Content style={styles.cardContent}>
               <Icon name="thermometer" size={30} color="#000" />
               <Text variant="titleLarge">
@@ -54,6 +61,9 @@ export default function WeatherCards({ lat, long }) {
           </Card>
 
           <Card mode="contained" style={styles.card}>
+            <Card.Content>
+              <Text variant="titleSmall">Chance of Rain</Text>
+            </Card.Content>
             <Card.Content style={styles.cardContent}>
               <Icon name="weather-pouring" size={30} color="#000" />
               <Text variant="titleLarge">
@@ -62,10 +72,8 @@ export default function WeatherCards({ lat, long }) {
             </Card.Content>
           </Card>
         </View>
-        <Text
-          variant="titleLarge"
-          style={{ marginLeft: 5, marginTop: 10, marginBottom: 5 }}
-        >
+        <Divider style={{ height: 1 }} />
+        <Text variant="titleMedium" style={{ marginLeft: 17, marginTop: 10 }}>
           Future
         </Text>
         <View style={styles.cardFlexBoxRow}>

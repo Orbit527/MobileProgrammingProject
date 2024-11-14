@@ -215,50 +215,16 @@ export default function Track() {
         />
 
         <View style={styles.container}>
-          <View style={styles.cardFlexBox}>
-            <Card mode="elevated" style={styles.cardHolder}>
-              <TrackParametersCards
-                duration={duration}
-                distance={distance}
-                pace={pace}
-                startTime={startTime}
-                endTime={endTime}
-              />
-
-              <View style={{ marginVertical: 8, alignItems: "center" }}>
-                {!isTracking ? (
-                  <Button
-                    style={styles.button}
-                    mode="contained"
-                    contentStyle={{ flexDirection: "row-reverse" }}
-                    icon={({ size, color }) => (
-                      <Icon name="arrow-right-thick" size={24} color="#fff" />
-                    )}
-                    onPress={() => startTracking()}
-                  >
-                    <Text variant="titleMedium" style={{ color: "white" }}>
-                      Start tracking
-                    </Text>
-                  </Button>
-                ) : (
-                  <Button
-                    style={styles.button}
-                    mode="contained"
-                    contentStyle={{ flexDirection: "row-reverse" }}
-                    icon={({ size, color }) => (
-                      <Icon name="stop-circle-outline" size={24} color="#fff" />
-                    )}
-                    buttonColor="darkred"
-                    onPress={() => endTracking()}
-                  >
-                    <Text variant="titleMedium" style={{ color: "white" }}>
-                      End tracking
-                    </Text>
-                  </Button>
-                )}
-              </View>
-            </Card>
-          </View>
+          <TrackParametersCards
+            duration={duration}
+            distance={distance}
+            pace={pace}
+            startTime={startTime}
+            endTime={endTime}
+            isTracking={isTracking}
+            startTracking={startTracking}
+            endTracking={endTracking}
+          />
 
           <Portal>
             <Modal

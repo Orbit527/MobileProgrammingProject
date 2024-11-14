@@ -34,17 +34,26 @@ export default function Home({ navigation }) {
               uri: "https://images.pexels.com/photos/1390403/pexels-photo-1390403.jpeg",
             }}
             resizeMode="cover"
-            style={{ flex: 1 }}
+            style={{ flex: 1, height: 240 }}
           >
-            <Text variant="displayLarge" style={{ margin: 20, color: "white" }}>
+            <Text
+              variant="displayLarge"
+              style={{
+                margin: 20,
+                color: "white",
+                textShadowColor: "rgba(0, 0, 0, 0.5)",
+                textShadowOffset: { width: -1, height: 1 },
+                textShadowRadius: 10,
+              }}
+            >
               Welcome to Run for Fun
             </Text>
           </ImageBackground>
           <View style={styles.container}>
-            <Text variant="headlineMedium" style={{ marginVertical: 20 }}>
-              Current Weather Conditions
-            </Text>
-            <WeatherCards lat={location ? location.coords.latitude : 0} long={location ? location.coords.longitude : 0} />
+            <WeatherCards
+              lat={location ? location.coords.latitude : 0}
+              long={location ? location.coords.longitude : 0}
+            />
           </View>
         </ScrollView>
       </View>
