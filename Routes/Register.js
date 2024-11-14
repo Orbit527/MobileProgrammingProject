@@ -1,9 +1,10 @@
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { useState } from "react";
 import { View } from "react-native";
-import { Appbar, Button, TextInput } from "react-native-paper";
+import { Appbar, Button, Text, TextInput } from "react-native-paper";
 import { firebaseAuth } from "../firebaseConfig.js";
 import { styles } from "../Styles/StyleSheet.js";
+import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 
 export default function Register({ navigation }) {
   const [email, setEmail] = useState("");
@@ -35,6 +36,7 @@ export default function Register({ navigation }) {
       </Appbar.Header>
 
       <View style={styles.container}>
+        <Text variant="titleLarge" style={{marginBottom: 10}}>Here you can register a new Account</Text>
         <TextInput
           style={{ marginBottom: 15 }}
           placeholder="Email"
@@ -58,9 +60,20 @@ export default function Register({ navigation }) {
           }
           onChangeText={(text) => setPassword(text)}
         />
-        <Button mode="contained" icon="login" onPress={() => signUp()}>
-          Create Account
-        </Button>
+        <View style={{ marginVertical: 8, alignItems: "center" }}>
+          <Button
+            style={styles.button}
+            mode="contained"
+            icon={({ size, color }) => (
+              <Icon name="login" size={24} color="#fff" />
+            )}
+            onPress={() => signUp()}
+          >
+            <Text variant="titleMedium" style={{ color: "white" }}>
+              Create Account
+            </Text>
+          </Button>
+        </View>
       </View>
     </View>
   );

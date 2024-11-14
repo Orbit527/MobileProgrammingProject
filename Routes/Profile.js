@@ -1,12 +1,10 @@
-import {
-  onAuthStateChanged,
-  signInWithEmailAndPassword
-} from "firebase/auth";
+import { onAuthStateChanged, signInWithEmailAndPassword } from "firebase/auth";
 import { useEffect, useState } from "react";
 import { KeyboardAvoidingView, View } from "react-native";
 import { Appbar, Button, Text, TextInput } from "react-native-paper";
 import { firebaseAuth } from "../firebaseConfig.js";
 import { styles } from "../Styles/StyleSheet.js";
+import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 
 export default function Profile({ navigation }) {
   const [email, setEmail] = useState("");
@@ -69,7 +67,7 @@ export default function Profile({ navigation }) {
             onChangeText={(text) => setPassword(text)}
           />
           {user ? (
-            <View>
+            <View style={{ marginVertical: 8, alignItems: "center" }}>
               <Text variant="titleLarge">Your Profile</Text>
               <Text variant="titleLarge" style={{ marginBottom: 25 }}>
                 {user.email}
@@ -78,24 +76,33 @@ export default function Profile({ navigation }) {
               <Button
                 mode="contained"
                 buttonColor="darkred"
-                icon="logout"
+                icon={({ size, color }) => (
+                  <Icon name="logout" size={24} color="#fff" />
+                )}
+                style={styles.button}
                 onPress={() => signOut()}
               >
-                Log Out
+                <Text variant="titleMedium" style={{ color: "white" }}>
+                  Log Out
+                </Text>
               </Button>
             </View>
           ) : (
-            <View>
+            <View style={{ marginVertical: 8, alignItems: "center" }}>
               <Button
                 mode="contained"
-                icon="login"
+                icon={({ size, color }) => (
+                  <Icon name="login" size={24} color="#fff" />
+                )}
                 onPress={() => signIn()}
-                style={{ marginBottom: 15 }}
+                style={styles.button}
               >
-                Login
+                                <Text variant="titleMedium" style={{ color: "white" }}>
+                  Login
+                </Text>
               </Button>
 
-              <Text variant="titleLarge" style={{ marginBottom: 5 }}>
+              <Text variant="titleLarge" style={{ marginVertical: 10 }}>
                 Don't have an account?
               </Text>
 

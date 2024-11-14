@@ -18,6 +18,7 @@ import RoutesGeneralStatistics from "./RoutesGeneralStatistics.js";
 export default function RoutesList({ navigation }) {
   const [routes, setRoutes] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [overallAmount, setOverallAmount] = useState(0);
   const [overallDistance, setOverallDistance] = useState(0);
   const [overallDuration, setOverallDuration] = useState(0);
   const [overallPace, setOverallPace] = useState(0);
@@ -40,6 +41,7 @@ export default function RoutesList({ navigation }) {
         // if there is no data, then display nothing, set states to 0 and return
         if (!data) {
           setRoutes([]);
+          setOverallAmount(0);
           setOverallDistance(0);
           setOverallDuration(0);
           setOverallPace(0);
@@ -53,6 +55,8 @@ export default function RoutesList({ navigation }) {
 
         setRoutes(dataWithKey.reverse());
         setLoading(true);
+
+        setOverallAmount(routes.length);
 
         let totalDistance = Object.values(dataWithKey).reduce(
           (acc, { distance }) => {
@@ -79,7 +83,7 @@ export default function RoutesList({ navigation }) {
       setOverallDistance(0);
       setOverallDuration(0);
     }
-  }, [user]);
+  }, [user, ]);
 
   const showDetails = (key) => {
     const route = routes.find((route) => route.key === key);
@@ -153,7 +157,7 @@ export default function RoutesList({ navigation }) {
             <ActivityIndicator animating={true} />
           )
         ) : (
-          <Text>You are not logged in!</Text>
+          <Text style={{ marginLeft: 17 }}>You are not logged in!</Text>
         )}
       </View>
     </View>
