@@ -11,6 +11,7 @@ import Track from "./Routes/Track";
 import { CommonActions } from "@react-navigation/native";
 import ProfileStack from "./Routes/ProfileStack";
 import RoutesStack from "./Routes/RoutesStack";
+import { SettingsProvider } from "./Helper/SettingsProvider";
 
 const Tab = createBottomTabNavigator();
 
@@ -19,105 +20,107 @@ const Tab = createBottomTabNavigator();
 export default function App() {
   return (
     <PaperProvider>
-      <NavigationContainer>
-        <Tab.Navigator
-          screenOptions={{
-            headerShown: false,
-          }}
-          tabBar={({ navigation, state, descriptors, insets }) => (
-            <BottomNavigation.Bar
-              navigationState={state}
-              safeAreaInsets={insets}
-              onTabPress={({ route, preventDefault }) => {
-                const event = navigation.emit({
-                  type: "tabPress",
-                  target: route.key,
-                  canPreventDefault: true,
-                });
-
-                if (event.defaultPrevented) {
-                  preventDefault();
-                } else {
-                  navigation.dispatch({
-                    ...CommonActions.navigate(route.name, route.params),
-                    target: state.key,
+      <SettingsProvider>
+        <NavigationContainer>
+          <Tab.Navigator
+            screenOptions={{
+              headerShown: false,
+            }}
+            tabBar={({ navigation, state, descriptors, insets }) => (
+              <BottomNavigation.Bar
+                navigationState={state}
+                safeAreaInsets={insets}
+                onTabPress={({ route, preventDefault }) => {
+                  const event = navigation.emit({
+                    type: "tabPress",
+                    target: route.key,
+                    canPreventDefault: true,
                   });
-                }
-              }}
-              renderIcon={({ route, focused, color }) => {
-                const { options } = descriptors[route.key];
-                if (options.tabBarIcon) {
-                  return options.tabBarIcon({ focused, color, size: 24 });
-                }
 
-                return null;
-              }}
-              getLabelText={({ route }) => {
-                const { options } = descriptors[route.key];
-                const label =
-                  options.tabBarLabel !== undefined
-                    ? options.tabBarLabel
-                    : options.title !== undefined
-                    ? options.title
-                    : route.title;
+                  if (event.defaultPrevented) {
+                    preventDefault();
+                  } else {
+                    navigation.dispatch({
+                      ...CommonActions.navigate(route.name, route.params),
+                      target: state.key,
+                    });
+                  }
+                }}
+                renderIcon={({ route, focused, color }) => {
+                  const { options } = descriptors[route.key];
+                  if (options.tabBarIcon) {
+                    return options.tabBarIcon({ focused, color, size: 24 });
+                  }
 
-                return label;
+                  return null;
+                }}
+                getLabelText={({ route }) => {
+                  const { options } = descriptors[route.key];
+                  const label =
+                    options.tabBarLabel !== undefined
+                      ? options.tabBarLabel
+                      : options.title !== undefined
+                      ? options.title
+                      : route.title;
+
+                  return label;
+                }}
+              />
+            )}
+          >
+            <Tab.Screen
+              name="Home"
+              component={Home}
+              options={{
+                tabBarLabel: "Home",
+                tabBarIcon: ({ color, size }) => {
+                  return <Icon name="home" size={size} color={color} />;
+                },
               }}
             />
-          )}
-        >
-          <Tab.Screen
-            name="Home"
-            component={Home}
-            options={{
-              tabBarLabel: "Home",
-              tabBarIcon: ({ color, size }) => {
-                return <Icon name="home" size={size} color={color} />;
-              },
-            }}
-          />
-          <Tab.Screen
-            name="RoutesStack"
-            component={RoutesStack}
-            options={{
-              tabBarLabel: "Routes",
-              tabBarIcon: ({ color, size }) => {
-                return <Icon name="routes" size={size} color={color} />;
-              },
-            }}
-          />
-          <Tab.Screen
-            name="Track"
-            component={Track}
-            options={{
-              tabBarLabel: "Track",
-              tabBarIcon: ({ color, size }) => {
-                return <Icon name="play" size={size} color={color} />;
-              },
-            }}
-          />
-          <Tab.Screen
-            name="ProfileStack"
-            component={ProfileStack}
-            options={{
-              tabBarLabel: "Profile",
-              tabBarIcon: ({ color, size }) => {
-                return <Icon name="account" size={size} color={color} />;
-              },
-            }}
-          />
-          <Tab.Screen
-            name="Settings"
-            component={Settings}
-            options={{
-              tabBarLabel: "Settings",
-              tabBarIcon: ({ color, size }) => {
-                return <Icon name="cog" size={size} color={color} />;
-              },
-            }}
-          />
-        </Tab.Navigator>
-      </NavigationContainer>
+            <Tab.Screen
+              name="RoutesStack"
+              component={RoutesStack}
+              options={{
+                tabBarLabel: "Routes",
+                tabBarIcon: ({ color, size }) => {
+                  return <Icon name="routes" size={size} color={color} />;
+                },
+              }}
+            />
+            <Tab.Screen
+              name="Track"
+              component={Track}
+              options={{
+                tabBarLabel: "Track",
+                tabBarIcon: ({ color, size }) => {
+                  return <Icon name="play" size={size} color={color} />;
+                },
+              }}
+            />
+            <Tab.Screen
+              name="ProfileStack"
+              component={ProfileStack}
+              options={{
+                tabBarLabel: "Profile",
+                tabBarIcon: ({ color, size }) => {
+                  return <Icon name="account" size={size} color={color} />;
+                },
+              }}
+            />
+            <Tab.Screen
+              name="Settings"
+              component={Settings}
+              options={{
+                tabBarLabel: "Settings",
+                tabBarIcon: ({ color, size }) => {
+                  return <Icon name="cog" size={size} color={color} />;
+                },
+              }}
+            />
+          </Tab.Navigator>
+        </NavigationContainer>
+      </SettingsProvider>
 
       <StatusBar style="auto" />
     </PaperProvider>

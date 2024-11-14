@@ -1,6 +1,7 @@
 import React from "react";
 import MapView, { Marker, Polyline } from "react-native-maps";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
+import { useSettings } from "../Helper/SettingsProvider.js";
 
 export default function RouteMap({
   locationLat,
@@ -8,6 +9,8 @@ export default function RouteMap({
   coordinates,
   tracking,
 }) {
+  const { trackingZoom } = useSettings();
+
   return (
     <MapView
       style={{ width: "100%", height: "50%" }}
@@ -20,8 +23,8 @@ export default function RouteMap({
       region={{
         latitude: locationLat ? locationLat : 0,
         longitude: locationLong ? locationLong : 0,
-        latitudeDelta: 0.002,
-        longitudeDelta: 0.002,
+        latitudeDelta: trackingZoom,
+        longitudeDelta: trackingZoom,
       }}
     >
       {tracking && (
