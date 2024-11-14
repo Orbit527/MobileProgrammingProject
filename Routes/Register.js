@@ -12,7 +12,6 @@ export default function Register({ navigation }) {
   const auth = firebaseAuth;
 
   const signUp = async () => {
-    console.log("signUp");
     try {
       const response = await createUserWithEmailAndPassword(
         auth,

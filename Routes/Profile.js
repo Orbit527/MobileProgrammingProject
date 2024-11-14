@@ -18,7 +18,6 @@ export default function Profile({ navigation }) {
 
   // from video: https://www.youtube.com/watch?v=ONAVmsGW6-M
   const signIn = async () => {
-    console.log("signIn");
     try {
       const response = await signInWithEmailAndPassword(auth, email, password);
       console.log(response);
@@ -34,7 +33,6 @@ export default function Profile({ navigation }) {
 
   useEffect(() => {
     onAuthStateChanged(firebaseAuth, (user) => {
-      console.log("user:" + user);
       setUser(user);
     });
   }, []);

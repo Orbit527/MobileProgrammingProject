@@ -1,25 +1,22 @@
 import * as Location from "expo-location";
+import { onAuthStateChanged } from "firebase/auth";
 import { push, ref } from "firebase/database";
 import React, { useEffect, useState } from "react";
 import { Alert, View } from "react-native";
 import {
   Appbar,
   Button,
-  Card,
-  Divider,
   Modal,
   PaperProvider,
   Portal,
   Text,
-  TextInput,
+  TextInput
 } from "react-native-paper";
 import RouteMap from "../Components/RouteMap.js";
 import TrackParametersCards from "../Components/TrackParametersCards.js";
 import { database, firebaseAuth } from "../firebaseConfig.js";
 import { formatTimestampDay } from "../Helper/HelperClass.js";
 import { styles } from "../Styles/StyleSheet.js";
-import { onAuthStateChanged } from "firebase/auth";
-import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 
 export default function Track() {
   const [isTracking, setIsTracking] = useState(false);
@@ -45,7 +42,6 @@ export default function Track() {
 
   const startTracking = () => {
     setIsTracking(true);
-    console.log("Now tracking");
     setDuration(0);
     setPace(0);
     setDistance(0);
@@ -58,7 +54,6 @@ export default function Track() {
   const endTracking = () => {
     if (duration > 30) {
       setIsTracking(false);
-      console.log("Not tracking!");
       setEndTime(Date.now());
       showDetails();
     } else {
@@ -67,7 +62,6 @@ export default function Track() {
   };
 
   const uploadDataToFirebase = () => {
-    console.log("Attempting push...");
 
     let newPace = pace;
     if (pace === Infinity) {
@@ -120,8 +114,6 @@ export default function Track() {
   }, [isTracking]);
 
   useEffect(() => {
-    console.log(coordinates);
-
     setDistance(calculateTotalDistance());
   }, [coordinates]);
 
@@ -159,8 +151,6 @@ export default function Track() {
 
       let location = await Location.getCurrentPositionAsync({ accuracy: 6 });
       setLocation(location);
-
-      //return location;
     })();
   };
 

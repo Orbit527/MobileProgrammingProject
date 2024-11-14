@@ -21,7 +21,6 @@ export default function WeatherCards({ lat, long }) {
       })
       .then((data) => {
         setResponse(data);
-        //console.log(data);
       })
       .catch((err) => console.error(err));
   };
