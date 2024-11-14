@@ -1,5 +1,5 @@
 export const formatDuration = (duration) => {
-	hours = Math.floor(duration / 3600);
+  hours = Math.floor(duration / 3600);
   duration %= 3600;
   minutes = Math.floor(duration / 60);
   seconds = duration % 60;
@@ -17,6 +17,9 @@ export const distanceToKm = (distance) => {
 };
 
 export const formatPace = (pace) => {
+  if (pace === Infinity) {
+    return 0;
+  }
   return Math.round(pace * 100) / 100;
 };
 
@@ -42,7 +45,7 @@ export const formatTimestampDay = (timestamp) => {
   return (
     date.getDate().toString().padStart(2, "0") +
     "." +
-    ((date.getMonth() + 1).toString().padStart(2, "0")) +
+    (date.getMonth() + 1).toString().padStart(2, "0") +
     "." +
     date.getFullYear()
   );
