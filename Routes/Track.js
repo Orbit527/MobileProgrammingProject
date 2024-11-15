@@ -10,15 +10,18 @@ import {
   PaperProvider,
   Portal,
   Text,
-  TextInput
+  TextInput,
 } from "react-native-paper";
 import RouteMap from "../Components/RouteMap.js";
 import TrackParametersCards from "../Components/TrackParametersCards.js";
 import { database, firebaseAuth } from "../firebaseConfig.js";
 import { formatTimestampDay } from "../Helper/HelperClass.js";
 import { styles } from "../Styles/StyleSheet.js";
+import { useKeepAwake } from "expo-keep-awake";
 
 export default function Track() {
+  useKeepAwake();
+
   const [isTracking, setIsTracking] = useState(false);
   const [location, setLocation] = useState(null);
   const [coordinates, setCoordinates] = useState([
@@ -62,7 +65,6 @@ export default function Track() {
   };
 
   const uploadDataToFirebase = () => {
-
     let newPace = pace;
     if (pace === Infinity) {
       newPace = 0;
