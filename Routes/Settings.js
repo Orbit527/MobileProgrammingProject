@@ -1,10 +1,14 @@
 import { View } from "react-native";
-import { Appbar, Button, Text } from "react-native-paper";
+import { Appbar, Button, SegmentedButtons, Text } from "react-native-paper";
 import { styles } from "../Styles/StyleSheet.js";
 import { useSettings } from "../Helper/SettingsProvider.js";
+import { useState } from "react";
 
 export default function Settings() {
   const { trackingZoom, setTrackingZoom } = useSettings();
+  const [value, setValue] = useState("");
+
+  const trackingValues = []
 
   return (
     <View style={styles.upperContainer}>
@@ -13,18 +17,26 @@ export default function Settings() {
       </Appbar.Header>
 
       <View style={styles.container}>
-        <Text variant="titleLarge">Settings</Text>
+        <Text variant="titleLarge" style={{marginVertical: 15}}>Tracking View Distance</Text>
 
-        <Text>Tracking Zoom: {trackingZoom}</Text>
-        <Button onPress={() => setTrackingZoom(0.001)}>
-          Close
-        </Button>
-        <Button onPress={() => setTrackingZoom(0.002)}>
-          Medium
-        </Button>
-        <Button onPress={() => setTrackingZoom(0.004)}>
-          Wide
-        </Button>
+        <SegmentedButtons
+          value={trackingZoom}
+          onValueChange={setTrackingZoom}
+          buttons={[
+            {
+              value: 0.001,
+              label: "Close",
+            },
+            {
+              value: 0.002,
+              label: "Medium",
+            },
+            { value: 0.004, label: "Far" },
+          ]}
+        />
+
+<Text>{value}</Text>
+
       </View>
     </View>
   );
