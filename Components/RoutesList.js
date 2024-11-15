@@ -79,7 +79,7 @@ export default function RoutesList({ navigation }) {
         let totalPace = Object.values(dataWithKey).reduce((acc, { pace }) => {
           return acc + parseFloat(pace);
         }, 0);
-        setOverallPace(totalPace / routes.length);
+        setOverallPace(totalPace / Object.keys(data).length);
       });
     } else {
       setOverallAmount(0);

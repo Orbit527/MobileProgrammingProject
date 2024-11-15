@@ -68,7 +68,7 @@ export default function Profile({ navigation }) {
           />
           {user ? (
             <View style={{ marginVertical: 8, alignItems: "center" }}>
-              <Text variant="titleLarge">Your Profile</Text>
+              <Text variant="titleMedium">You are currently logged in with:</Text>
               <Text variant="titleLarge" style={{ marginBottom: 25 }}>
                 {user.email}
               </Text>
