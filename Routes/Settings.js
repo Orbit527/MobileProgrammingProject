@@ -6,9 +6,6 @@ import { useState } from "react";
 
 export default function Settings() {
   const { trackingZoom, setTrackingZoom } = useSettings();
-  const [value, setValue] = useState("");
-
-  const trackingValues = []
 
   return (
     <View style={styles.upperContainer}>
@@ -17,7 +14,9 @@ export default function Settings() {
       </Appbar.Header>
 
       <View style={styles.container}>
-        <Text variant="titleLarge" style={{marginVertical: 15}}>Tracking View Distance</Text>
+        <Text variant="titleLarge" style={{ marginVertical: 15 }}>
+          Tracking View Distance
+        </Text>
 
         <SegmentedButtons
           value={trackingZoom}
@@ -34,9 +33,6 @@ export default function Settings() {
             { value: 0.004, label: "Far" },
           ]}
         />
-
-<Text>{value}</Text>
-
       </View>
     </View>
   );

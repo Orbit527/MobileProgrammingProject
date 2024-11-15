@@ -1,7 +1,7 @@
 import { onAuthStateChanged, signInWithEmailAndPassword } from "firebase/auth";
 import { useEffect, useState } from "react";
 import { KeyboardAvoidingView, View } from "react-native";
-import { Appbar, Button, Text, TextInput } from "react-native-paper";
+import { Appbar, Button, Card, Text, TextInput } from "react-native-paper";
 import { firebaseAuth } from "../firebaseConfig.js";
 import { styles } from "../Styles/StyleSheet.js";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
@@ -43,32 +43,38 @@ export default function Profile({ navigation }) {
 
       <View style={styles.container}>
         <KeyboardAvoidingView behavior="padding">
-          <TextInput
-            style={{ marginBottom: 15 }}
-            placeholder="Email"
-            value={email}
-            mode="outlined"
-            label="Email"
-            onChangeText={(text) => setEmail(text)}
-          />
-          <TextInput
-            style={{ marginBottom: 15 }}
-            placeholder="Password"
-            value={password}
-            mode="outlined"
-            secureTextEntry={passwordHidden}
-            label="Password"
-            right={
-              <TextInput.Icon
-                icon="eye"
-                onPress={() => setPasswordHidden(!passwordHidden)}
+          {!user && (
+            <View>
+              <TextInput
+                style={{ marginBottom: 15 }}
+                placeholder="Email"
+                value={email}
+                mode="outlined"
+                label="Email"
+                onChangeText={(text) => setEmail(text)}
               />
-            }
-            onChangeText={(text) => setPassword(text)}
-          />
+              <TextInput
+                style={{ marginBottom: 15 }}
+                placeholder="Password"
+                value={password}
+                mode="outlined"
+                secureTextEntry={passwordHidden}
+                label="Password"
+                right={
+                  <TextInput.Icon
+                    icon="eye"
+                    onPress={() => setPasswordHidden(!passwordHidden)}
+                  />
+                }
+                onChangeText={(text) => setPassword(text)}
+              />
+            </View>
+          )}
           {user ? (
             <View style={{ marginVertical: 8, alignItems: "center" }}>
-              <Text variant="titleMedium">You are currently logged in with:</Text>
+              <Text variant="titleMedium">
+                You are currently logged in with:
+              </Text>
               <Text variant="titleLarge" style={{ marginBottom: 25 }}>
                 {user.email}
               </Text>
@@ -97,7 +103,7 @@ export default function Profile({ navigation }) {
                 onPress={() => signIn()}
                 style={styles.button}
               >
-                                <Text variant="titleMedium" style={{ color: "white" }}>
+                <Text variant="titleMedium" style={{ color: "white" }}>
                   Login
                 </Text>
               </Button>
