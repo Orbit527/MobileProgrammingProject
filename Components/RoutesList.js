@@ -56,7 +56,9 @@ export default function RoutesList({ navigation }) {
         setRoutes(dataWithKey.reverse());
         setLoading(true);
 
-        setOverallAmount(routes.length);
+        console.log(Object.keys(data).length);
+
+        setOverallAmount(Object.keys(data).length);
 
         let totalDistance = Object.values(dataWithKey).reduce(
           (acc, { distance }) => {
@@ -80,8 +82,10 @@ export default function RoutesList({ navigation }) {
         setOverallPace(totalPace / routes.length);
       });
     } else {
+      setOverallAmount(0);
       setOverallDistance(0);
       setOverallDuration(0);
+      setOverallPace(0);
     }
   }, [user, ]);
 
@@ -94,7 +98,7 @@ export default function RoutesList({ navigation }) {
     <View style={{ flex: 1 }}>
       <View style={styles.container}>
         <RoutesGeneralStatistics
-          amount={routes.length}
+          amount={overallAmount}
           averagePace={overallPace}
           overallDistance={overallDistance}
           overallDuration={overallDuration}
