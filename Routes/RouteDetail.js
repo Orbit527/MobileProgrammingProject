@@ -57,7 +57,7 @@ export default function RouteDetail({ navigation, route }) {
             style={styles.button}
             onPress={() => deleteEntry(data.key)}
           >
-            Delete
+            Delete Route
           </Button>
         </View>
       </View>
