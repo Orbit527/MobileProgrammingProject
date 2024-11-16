@@ -15,7 +15,7 @@ import { distanceToKm, formatDuration } from "../Helper/HelperClass.js";
 import { styles } from "../Styles/StyleSheet.js";
 import RoutesGeneralStatistics from "./RoutesGeneralStatistics.js";
 
-export default function RoutesList({ navigation }) {
+export default function RoutesList({ navigation, type }) {
   const [routes, setRoutes] = useState([]);
   const [loading, setLoading] = useState(false);
   const [overallAmount, setOverallAmount] = useState(0);
@@ -36,7 +36,7 @@ export default function RoutesList({ navigation }) {
     if (user) {
       const routesRef = ref(database, "/users/" + user.uid);
       onValue(routesRef, (snapshot) => {
-        data = snapshot.val();
+        let data = snapshot.val();
 
         // if there is no data, then display nothing, set states to 0 and return
         if (!data) {
@@ -48,17 +48,23 @@ export default function RoutesList({ navigation }) {
           return;
         }
 
-        const dataWithKey = Object.entries(data).map(([key, other]) => ({
+        let dataWithKey = Object.entries(data).map(([key, other]) => ({
           key,
           ...other,
         }));
 
-        setRoutes(dataWithKey.reverse());
+        dataWithKey = dataWithKey.reverse();
+
+        if (type == "reduced") {
+          dataWithKey = dataWithKey.slice(0, 3);
+        }
+
+        setRoutes(dataWithKey);
         setLoading(true);
 
-        console.log(Object.keys(data).length);
+        console.log(Object.keys(dataWithKey).length);
 
-        setOverallAmount(Object.keys(data).length);
+        setOverallAmount(Object.keys(dataWithKey).length);
 
         let totalDistance = Object.values(dataWithKey).reduce(
           (acc, { distance }) => {
@@ -79,7 +85,7 @@ export default function RoutesList({ navigation }) {
         let totalPace = Object.values(dataWithKey).reduce((acc, { pace }) => {
           return acc + parseFloat(pace);
         }, 0);
-        setOverallPace(totalPace / Object.keys(data).length);
+        setOverallPace(totalPace / Object.keys(dataWithKey).length);
       });
     } else {
       setOverallAmount(0);
@@ -98,6 +104,7 @@ export default function RoutesList({ navigation }) {
     <View style={{ flex: 1 }}>
       <View style={styles.container}>
         <RoutesGeneralStatistics
+          title={type == "reduced" ? "Last 3 Routes" : "Overall Statistics"} //set title, if it is used in Home or Routes
           amount={overallAmount}
           averagePace={overallPace}
           overallDistance={overallDistance}
@@ -114,6 +121,7 @@ export default function RoutesList({ navigation }) {
         {user ? (
           loading ? (
             <FlatList
+            scrollEnabled={type == "reduced" ? false : true}
               ListEmptyComponent={
                 <Text variant="titleMedium">No Routes yet...</Text>
               }

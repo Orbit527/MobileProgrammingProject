@@ -4,6 +4,7 @@ import WeatherCards from "../Components/WeatherCards.js";
 import { styles } from "../Styles/StyleSheet.js";
 import { useEffect, useState } from "react";
 import * as Location from "expo-location";
+import RoutesList from "../Components/RoutesList.js";
 
 export default function Home({ navigation }) {
   const [location, setLocation] = useState(null);
@@ -55,6 +56,7 @@ export default function Home({ navigation }) {
               long={location ? location.coords.longitude : 0}
             />
           </View>
+          <RoutesList navigation={navigation} type={"reduced"}></RoutesList>
         </ScrollView>
       </View>
     </View>

@@ -10,6 +10,7 @@ import {
 import { styles } from "../Styles/StyleSheet.js";
 
 export default function RoutesGeneralStatistics({
+  title,
   amount,
   averagePace,
   overallDistance,
@@ -18,7 +19,7 @@ export default function RoutesGeneralStatistics({
   return (
     <Card mode="elevated" style={styles.cardHolder}>
       <Text variant="titleLarge" style={{ marginLeft: 17, marginTop: 15, marginBottom: 5 }}>
-        Overall Statistics
+        {title}
       </Text>
       <Divider style={{ height: 1 }} />
 

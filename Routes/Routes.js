@@ -14,7 +14,7 @@ export default function Routes({ navigation }) {
         <Appbar.Content title="Routes" titleStyle={{ fontSize: 24 }} />
       </Appbar.Header>
 
-      <RoutesList navigation={navigation}/>
+      <RoutesList navigation={navigation} type={"normal"}/>
 
     </View>
   );
