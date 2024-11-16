@@ -1,6 +1,6 @@
 import { onAuthStateChanged, signInWithEmailAndPassword } from "firebase/auth";
 import { useEffect, useState } from "react";
-import { KeyboardAvoidingView, View } from "react-native";
+import { Alert, KeyboardAvoidingView, View } from "react-native";
 import { Appbar, Button, Card, Text, TextInput } from "react-native-paper";
 import { firebaseAuth } from "../firebaseConfig.js";
 import { styles } from "../Styles/StyleSheet.js";
@@ -21,7 +21,7 @@ export default function Profile({ navigation }) {
       console.log(response);
     } catch (error) {
       console.log(error);
-      alert("Sign in failed: " + error.message);
+      Alert.alert("Sign in failed", "Check your credentials!");
     }
   };
 

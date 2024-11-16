@@ -1,6 +1,6 @@
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { useState } from "react";
-import { View } from "react-native";
+import { Alert, View } from "react-native";
 import { Appbar, Button, Text, TextInput } from "react-native-paper";
 import { firebaseAuth } from "../firebaseConfig.js";
 import { styles } from "../Styles/StyleSheet.js";
@@ -24,7 +24,7 @@ export default function Register({ navigation }) {
       navigation.navigate("Profile");
     } catch (error) {
       console.log(error);
-      alert("Sign in failed: " + error.message);
+      Alert.alert("Registration failed", "Check your credentials!");
     }
   };
 
