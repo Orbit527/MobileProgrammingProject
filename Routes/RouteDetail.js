@@ -8,7 +8,7 @@ import RouteParametersCards from "../Components/RouteParametersCards.js";
 import { database, firebaseAuth } from "../firebaseConfig.js";
 import { styles } from "../Styles/StyleSheet.js";
 
-export default function RouteDetail({ navigation, route}) {
+export default function RouteDetail({ navigation, route }) {
   const { data, from } = route.params;
 
   const [user, setUser] = useState(null);
@@ -31,16 +31,20 @@ export default function RouteDetail({ navigation, route}) {
       <Appbar.Header elevated mode="small">
         <Appbar.BackAction onPress={() => navigation.navigate(from)} />
         <Appbar.Content title={data.title} titleStyle={{ fontSize: 24 }} />
+        <Appbar.Action
+          icon="trash-can-outline"
+          iconColor="darkred"
+          onPress={() => deleteEntry(data.key)}
+        />
       </Appbar.Header>
 
+      <RouteMap
+        locationLat={data.coordinates[0].latitude}
+        locationLong={data.coordinates[0].longitude}
+        coordinates={data.coordinates}
+        tracking={false}
+      />
       <View style={styles.container}>
-        <RouteMap
-          locationLat={data.coordinates[0].latitude}
-          locationLong={data.coordinates[0].longitude}
-          coordinates={data.coordinates}
-          tracking={false}
-        />
-
         <RouteParametersCards
           duration={data.duration}
           distance={data.distance}
@@ -48,18 +52,6 @@ export default function RouteDetail({ navigation, route}) {
           startTime={data.startTime}
           endTime={data.endTime}
         />
-
-        <View style={{ alignItems: "center" }}>
-          <Button
-            mode="contained"
-            icon="trash-can-outline"
-            buttonColor="darkred"
-            style={styles.button}
-            onPress={() => deleteEntry(data.key)}
-          >
-            Delete Route
-          </Button>
-        </View>
       </View>
     </View>
   );
