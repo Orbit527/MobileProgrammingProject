@@ -15,7 +15,7 @@ import { distanceToKm, formatDuration } from "../Helper/HelperClass.js";
 import { styles } from "../Styles/StyleSheet.js";
 import RoutesGeneralStatistics from "./RoutesGeneralStatistics.js";
 
-export default function RoutesList({ navigation, type }) {
+export default function RoutesList({ navigation, reduced }) {
   const [routes, setRoutes] = useState([]);
   const [loading, setLoading] = useState(false);
   const [overallAmount, setOverallAmount] = useState(0);
@@ -55,7 +55,7 @@ export default function RoutesList({ navigation, type }) {
 
         dataWithKey = dataWithKey.reverse();
 
-        if (type == "reduced") {
+        if (reduced == true) {
           dataWithKey = dataWithKey.slice(0, 3);
         }
 
@@ -104,7 +104,7 @@ export default function RoutesList({ navigation, type }) {
     <View style={{ flex: 1 }}>
       <View style={styles.container}>
         <RoutesGeneralStatistics
-          title={type == "reduced" ? "Last 3 Routes" : "Overall Statistics"} //set title, if it is used in Home or Routes
+          title={reduced == true ? "Last 3 Routes" : "Overall Statistics"} //set title, if it is used in Home or Routes
           amount={overallAmount}
           averagePace={overallPace}
           overallDistance={overallDistance}
@@ -121,7 +121,7 @@ export default function RoutesList({ navigation, type }) {
         {user ? (
           loading ? (
             <FlatList
-            scrollEnabled={type == "reduced" ? false : true}
+            scrollEnabled={reduced == true ? false : true}
               ListEmptyComponent={
                 <Text variant="titleMedium">No Routes yet...</Text>
               }
