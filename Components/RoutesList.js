@@ -15,7 +15,7 @@ import { distanceToKm, formatDuration } from "../Helper/HelperClass.js";
 import { styles } from "../Styles/StyleSheet.js";
 import RoutesGeneralStatistics from "./RoutesGeneralStatistics.js";
 
-export default function RoutesList({ navigation, reduced }) {
+export default function RoutesList({ navigation, reduced, from }) {
   const [routes, setRoutes] = useState([]);
   const [loading, setLoading] = useState(false);
   const [overallAmount, setOverallAmount] = useState(0);
@@ -97,7 +97,7 @@ export default function RoutesList({ navigation, reduced }) {
 
   const showDetails = (key) => {
     const route = routes.find((route) => route.key === key);
-    navigation.navigate("RouteDetail", { data: route });
+    navigation.navigate("RouteDetail", { data: route, from: from });
   };
 
   return (

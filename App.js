@@ -12,6 +12,7 @@ import { CommonActions } from "@react-navigation/native";
 import ProfileStack from "./Routes/ProfileStack";
 import RoutesStack from "./Routes/RoutesStack";
 import { SettingsProvider } from "./Helper/SettingsProvider";
+import HomeStack from "./Routes/HomeStack";
 
 const Tab = createBottomTabNavigator();
 
@@ -69,10 +70,10 @@ export default function App() {
             )}
           >
             <Tab.Screen
-              name="Home"
-              component={Home}
+              name="Homestack"
+              component={HomeStack}
               options={{
-                tabBarLabel: "Home",
+                tabBarLabel: "Homestack",
                 tabBarIcon: ({ color, size }) => {
                   return <Icon name="home" size={size} color={color} />;
                 },

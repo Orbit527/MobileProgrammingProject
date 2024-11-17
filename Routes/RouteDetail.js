@@ -8,8 +8,8 @@ import RouteParametersCards from "../Components/RouteParametersCards.js";
 import { database, firebaseAuth } from "../firebaseConfig.js";
 import { styles } from "../Styles/StyleSheet.js";
 
-export default function RouteDetail({ navigation, route }) {
-  const { data } = route.params;
+export default function RouteDetail({ navigation, route}) {
+  const { data, from } = route.params;
 
   const [user, setUser] = useState(null);
 
@@ -23,13 +23,13 @@ export default function RouteDetail({ navigation, route }) {
     console.log("Deleted: " + key);
 
     remove(ref(database, "users/" + user.uid + "/" + key));
-    navigation.navigate("Route");
+    navigation.navigate(from);
   };
 
   return (
     <View style={styles.upperContainer}>
       <Appbar.Header elevated mode="small">
-        <Appbar.BackAction onPress={() => navigation.navigate("Route")} />
+        <Appbar.BackAction onPress={() => navigation.navigate(from)} />
         <Appbar.Content title={data.title} titleStyle={{ fontSize: 24 }} />
       </Appbar.Header>
 

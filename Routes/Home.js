@@ -56,7 +56,7 @@ export default function Home({ navigation }) {
               long={location ? location.coords.longitude : 0}
             />
           </View>
-          <RoutesList navigation={navigation} reduced={true}></RoutesList>
+          <RoutesList navigation={navigation} reduced={true} from={"Home"}></RoutesList>
         </ScrollView>
       </View>
     </View>
