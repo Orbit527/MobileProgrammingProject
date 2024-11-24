@@ -26,7 +26,7 @@ export default function RouteParametersCards({
               <Text variant="titleSmall">Time</Text>
             </Card.Content>
             <Card.Content style={styles.cardContent}>
-              <Icon name="clock-outline" size={30} color="#000" />
+              <Icon name="clock-outline" size={28} color="#000" />
               <Text variant="titleMedium">{formatDuration(duration)} h</Text>
             </Card.Content>
           </Card>
@@ -36,7 +36,7 @@ export default function RouteParametersCards({
               <Text variant="titleSmall">Distance</Text>
             </Card.Content>
             <Card.Content style={styles.cardContent}>
-              <Icon name="map-marker-distance" size={30} color="#000" />
+              <Icon name="arrow-expand-horizontal" size={28} color="#000" />
               <Text variant="titleMedium">{distanceToKm(distance)} km</Text>
             </Card.Content>
           </Card>
@@ -48,7 +48,7 @@ export default function RouteParametersCards({
               <Text variant="titleSmall">Pace</Text>
             </Card.Content>
             <Card.Content style={styles.cardContent}>
-              <Icon name="speedometer" size={30} color="#000" />
+              <Icon name="speedometer" size={28} color="#000" />
               <Text variant="titleMedium">{formatPace(pace)} min/km</Text>
             </Card.Content>
           </Card>
@@ -58,7 +58,7 @@ export default function RouteParametersCards({
               <Text variant="titleSmall">Date</Text>
             </Card.Content>
             <Card.Content style={styles.cardContent}>
-              <Icon name="calendar" size={24} color="#000" />
+              <Icon name="calendar" size={28} color="#000" />
               <Text variant="titleMedium">{formatTimestampDay(startTime)}</Text>
             </Card.Content>
           </Card>
@@ -70,7 +70,7 @@ export default function RouteParametersCards({
               <Text variant="titleSmall">Starting Time</Text>
             </Card.Content>
             <Card.Content style={styles.cardContent}>
-              <Icon name="clock-start" size={24} color="#000" />
+              <Icon name="clock-start" size={28} color="#000" />
               <Text variant="titleMedium">
                 {formatTimestampHours(startTime)}
               </Text>
@@ -82,7 +82,7 @@ export default function RouteParametersCards({
               <Text variant="titleSmall">Finishing Time</Text>
             </Card.Content>
             <Card.Content style={styles.cardContent}>
-              <Icon name="clock-end" size={24} color="#000" />
+              <Icon name="clock-end" size={28} color="#000" />
               <Text variant="titleMedium">{formatTimestampHours(endTime)}</Text>
             </Card.Content>
           </Card>
