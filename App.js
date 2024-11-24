@@ -73,7 +73,7 @@ export default function App() {
               name="Homestack"
               component={HomeStack}
               options={{
-                tabBarLabel: "Homestack",
+                tabBarLabel: "Home",
                 tabBarIcon: ({ color, size }) => {
                   return <Icon name="home" size={size} color={color} />;
                 },
