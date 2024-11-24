@@ -17,7 +17,7 @@ export const distanceToKm = (distance) => {
 };
 
 export const formatPace = (pace) => {
-  if (pace === Infinity) {
+  if (pace === Infinity || isNaN(pace)) {
     return 0;
   }
   return Math.round(pace * 100) / 100;
