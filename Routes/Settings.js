@@ -5,7 +5,7 @@ import { useSettings } from "../Helper/SettingsProvider.js";
 import { useState } from "react";
 
 export default function Settings() {
-  const { trackingZoom, setTrackingZoom } = useSettings();
+  const { settings, updateSetting } = useSettings();
 
   return (
     <View style={styles.upperContainer}>
@@ -19,8 +19,8 @@ export default function Settings() {
         </Text>
 
         <SegmentedButtons
-          value={trackingZoom}
-          onValueChange={setTrackingZoom}
+          value={settings.trackingZoom}
+          onValueChange={(value) => updateSetting("trackingZoom", value)}
           buttons={[
             {
               value: 0.001,

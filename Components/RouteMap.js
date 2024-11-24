@@ -9,7 +9,7 @@ export default function RouteMap({
   coordinates,
   tracking,
 }) {
-  const { trackingZoom } = useSettings();
+  const { settings, updateSetting } = useSettings();
 
   return (
     <MapView
@@ -23,8 +23,8 @@ export default function RouteMap({
       region={{
         latitude: locationLat ? locationLat : 0,
         longitude: locationLong ? locationLong : 0,
-        latitudeDelta: trackingZoom,
-        longitudeDelta: trackingZoom,
+        latitudeDelta: settings.trackingZoom,
+        longitudeDelta: settings.trackingZoom,
       }}
     >
       {tracking && (
