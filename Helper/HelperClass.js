@@ -20,7 +20,11 @@ export const formatPace = (pace) => {
   if (pace === Infinity || isNaN(pace)) {
     return 0;
   }
-  return Math.round(pace * 100) / 100;
+  const val = Math.round(pace * 100) / 100;
+  if (val >= 100) {
+    return 99;
+  }
+  return val;
 };
 
 export const formatTimestampHours = (timestamp) => {
