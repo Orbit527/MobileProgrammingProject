@@ -47,7 +47,7 @@ export default function RouteMap({
           }}
           title="Start"
         >
-          <Icon name="send" size={24} color={"#000000"} />
+          <Icon name="send" size={24} color={"#000000"} style={{transform: [{rotateZ: '90deg'}]}} />
         </Marker>
       )}
 
