@@ -13,12 +13,15 @@ import ProfileStack from "./Routes/ProfileStack";
 import RoutesStack from "./Routes/RoutesStack";
 import { SettingsProvider } from "./Helper/SettingsProvider";
 import HomeStack from "./Routes/HomeStack";
+import { useKeepAwake } from "expo-keep-awake";
 
 const Tab = createBottomTabNavigator();
 
 // Nagivation was mostly taken from: https://callstack.github.io/react-native-paper/docs/components/BottomNavigation/BottomNavigationBar
 
 export default function App() {
+  useKeepAwake();
+
   return (
     <PaperProvider>
       <SettingsProvider>

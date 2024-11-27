@@ -17,11 +17,8 @@ import TrackParametersCards from "../Components/TrackParametersCards.js";
 import { database, firebaseAuth } from "../firebaseConfig.js";
 import { formatTimestampDay } from "../Helper/HelperClass.js";
 import { styles } from "../Styles/StyleSheet.js";
-import { useKeepAwake } from "expo-keep-awake";
 
 export default function Track() {
-  useKeepAwake();
-
   const [isTracking, setIsTracking] = useState(false);
   const [location, setLocation] = useState(null);
   const [coordinates, setCoordinates] = useState([
@@ -159,7 +156,7 @@ export default function Track() {
   const calculateDistance = (c1, c2) => {
     const toRadians = (degrees) => degrees * (Math.PI / 180);
 
-    const R = 6371e3; // Radius of Earth in meters
+    const R = 6371e3;
     const lat1 = toRadians(c1.latitude);
     const lat2 = toRadians(c2.latitude);
     const deltaLat = toRadians(c2.latitude - c1.latitude);
@@ -173,7 +170,7 @@ export default function Track() {
         Math.sin(deltaLon / 2);
     const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
 
-    return R * c; // Distance in meters
+    return R * c; // returns distance in meters from coord 1 and 2
   };
 
   const calculateTotalDistance = () => {
@@ -181,7 +178,7 @@ export default function Track() {
     for (let i = 0; i < coordinates.length - 1; i++) {
       totalDistance += calculateDistance(coordinates[i], coordinates[i + 1]);
     }
-    return totalDistance; // Total distance in meters
+    return totalDistance; // returns total distance in meters
   };
 
   const showDetails = (key) => {
