@@ -1,4 +1,4 @@
-import { ImageBackground, ScrollView, View } from "react-native";
+import { Alert, ImageBackground, ScrollView, View } from "react-native";
 import { Appbar, Text } from "react-native-paper";
 import WeatherCards from "../Components/WeatherCards.js";
 import { styles } from "../Styles/StyleSheet.js";
@@ -13,7 +13,7 @@ export default function Home({ navigation }) {
     (async () => {
       let { status } = await Location.requestForegroundPermissionsAsync();
       if (status !== "granted") {
-        setErrorMsg("Permission to access location was denied!");
+        Alert.alert("Permission to access location was denied!");
         return;
       }
 

@@ -40,7 +40,7 @@ export const styles = StyleSheet.create({
     justifyContent: "space-around",
   },
   cardHolder: {
-    backgroundColor: "#d9eeff",
+    backgroundColor: "#EFF4F9",
     padding: 5,
   },
   cardContentTall: {
