@@ -60,7 +60,7 @@ export default function RoutesList({ navigation, reduced, from }) {
         }
 
         setRoutes(dataWithKey);
-        setLoading(true);
+        setLoading(false);
 
         console.log(Object.keys(dataWithKey).length);
 
@@ -119,11 +119,11 @@ export default function RoutesList({ navigation, reduced, from }) {
         </Text>
 
         {user ? (
-          loading ? (
+          !loading ? (
             <FlatList
             scrollEnabled={reduced == true ? false : true}
               ListEmptyComponent={
-                <Text variant="titleMedium">No Routes yet...</Text>
+                <Text variant="titleMedium" style={{marginLeft: 20}}>No Routes yet...</Text>
               }
               data={routes}
               renderItem={({ item }) => (
@@ -169,7 +169,7 @@ export default function RoutesList({ navigation, reduced, from }) {
             <ActivityIndicator animating={true} />
           )
         ) : (
-          <Text style={{ marginLeft: 17 }}>You are not logged in!</Text>
+          <Text  variant="titleMedium" style={{ marginLeft: 17 }}>You are not logged in!</Text>
         )}
       </View>
     </View>
