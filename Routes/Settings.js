@@ -1,8 +1,7 @@
 import { View } from "react-native";
-import { Appbar, Button, SegmentedButtons, Text } from "react-native-paper";
-import { styles } from "../Styles/StyleSheet.js";
+import { Appbar, SegmentedButtons, Text } from "react-native-paper";
 import { useSettings } from "../Helper/SettingsProvider.js";
-import { useState } from "react";
+import { styles } from "../Styles/StyleSheet.js";
 
 export default function Settings() {
   const { settings, updateSetting } = useSettings();
@@ -15,7 +14,7 @@ export default function Settings() {
 
       <View style={styles.container}>
         <Text variant="titleLarge" style={{ marginVertical: 15 }}>
-          Tracking View Distance
+          Map View Distance
         </Text>
 
         <SegmentedButtons
@@ -31,6 +30,26 @@ export default function Settings() {
               label: "Medium",
             },
             { value: 0.004, label: "Far" },
+          ]}
+        />
+
+        <Text variant="titleLarge" style={{ marginVertical: 15 }}>
+          Tracking Accuracy
+        </Text>
+
+        <SegmentedButtons
+          value={settings.trackingAccuracy}
+          onValueChange={(value) => updateSetting("trackingAccuracy", value)}
+          buttons={[
+            {
+              value: 4,
+              label: "Low",
+            },
+            {
+              value: 5,
+              label: "Medium",
+            },
+            { value: 6, label: "High" },
           ]}
         />
       </View>

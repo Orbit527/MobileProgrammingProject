@@ -8,6 +8,7 @@ const SettingsContext = createContext();
 export const SettingsProvider = ({ children }) => {
   const [settings, setSettings] = useState({
     trackingZoom: 0.002,
+    trackingAccuracy: 6,
   });
 
   useEffect(() => {

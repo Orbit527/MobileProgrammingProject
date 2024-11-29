@@ -17,7 +17,7 @@ export default function Home({ navigation }) {
         return;
       }
 
-      let location = await Location.getCurrentPositionAsync({ accuracy: 6 });
+      let location = await Location.getCurrentPositionAsync({ accuracy: 1 });
       setLocation(location);
     })();
   }, []);

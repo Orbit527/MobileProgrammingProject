@@ -17,6 +17,7 @@ import TrackParametersCards from "../Components/TrackParametersCards.js";
 import { database, firebaseAuth } from "../firebaseConfig.js";
 import { formatTimestampDay } from "../Helper/HelperClass.js";
 import { styles } from "../Styles/StyleSheet.js";
+import { useSettings } from "../Helper/SettingsProvider.js";
 
 export default function Track() {
   const [isTracking, setIsTracking] = useState(false);
@@ -33,6 +34,7 @@ export default function Track() {
   const [visible, setVisible] = React.useState(false);
 
   const [user, setUser] = useState(null);
+  const { settings, updateSetting } = useSettings();
 
   useEffect(() => {
     onAuthStateChanged(firebaseAuth, (user) => {
@@ -55,7 +57,7 @@ export default function Track() {
     if (duration > 30) {
       setIsTracking(false);
       setEndTime(Date.now());
-      showDetails();
+      setVisible(true);
     } else {
       Alert.alert("You need to run at least 30 seconds!");
     }
@@ -148,7 +150,7 @@ export default function Track() {
         return;
       }
 
-      let location = await Location.getCurrentPositionAsync({ accuracy: 6 });
+      let location = await Location.getCurrentPositionAsync({ accuracy: settings.trackingAccuracy });
       setLocation(location);
     })();
   };
@@ -179,14 +181,6 @@ export default function Track() {
       totalDistance += calculateDistance(coordinates[i], coordinates[i + 1]);
     }
     return totalDistance; // returns total distance in meters
-  };
-
-  const showDetails = (key) => {
-    setVisible(true);
-  };
-
-  const hideDetails = () => {
-    setVisible(false);
   };
 
   return (
@@ -254,7 +248,7 @@ export default function Track() {
                         buttonColor="grey"
                         mode="contained"
                         icon="cancel"
-                        onPress={hideDetails}
+                        onPress={() => {setVisible(false)}}
                       >
                         Discard
                       </Button>
@@ -280,7 +274,7 @@ export default function Track() {
                       buttonColor="grey"
                       mode="contained"
                       icon="cancel"
-                      onPress={hideDetails}
+                      onPress={() => {setVisible(false)}}
                     >
                       Discard
                     </Button>
