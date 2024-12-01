@@ -5,8 +5,7 @@ import {
   distanceToKm,
   formatDuration,
   formatPace,
-  formatTimestampDay,
-  formatTimestampHours,
+  formatTimestampHours
 } from "../Helper/HelperClass.js";
 import { styles } from "../Styles/StyleSheet.js";
 

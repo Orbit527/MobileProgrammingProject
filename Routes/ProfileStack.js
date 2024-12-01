@@ -1,14 +1,11 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import React, { useEffect } from "react";
-import RouteDetail from "./RouteDetail";
-import Routes from "./Routes";
-import { useNavigation } from "@react-navigation/native";
+import React from "react";
 import Profile from "./Profile";
 import Register from "./Register";
 
 const Stack = createNativeStackNavigator();
 
-export default function ProfileStack({ navigation, route }) {
+export default function ProfileStack() {
 
   return (
     <Stack.Navigator
